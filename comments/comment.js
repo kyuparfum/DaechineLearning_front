@@ -163,8 +163,41 @@ async function commentDelete(comment_id) {
 window.onload = async function () {
     const response_comment = await getComment(articleId);
 
+    // 유저가 가진 이모티콘 가져오기
     const response_useremoticon = await getUserEmoticon(userId);
     console.log(response_useremoticon);
+    const userEmoticonList = document.getElementById('user_emoticon_list')
+    response_useremoticon.forEach(useremoticon => {
+        const userEmoticon = document.createElement('li')
+        userEmoticon.setAttribute('class', 'nav-item')
+        userEmoticonList.appendChild(userEmoticon)
+
+        const userEmoticonButton = document.createElement('button')
+        userEmoticonButton.setAttribute('style', 'border: none;')
+
+        userEmoticonButton.addEventListener('click', function () {
+            const emoticonImages = document.getElementById('emoticon_images')
+            console.log(emoticonImages.childNodes)
+            while (emoticonImages.firstChild) {
+                emoticonImages.firstChild.remove();
+            }
+            useremoticon.images.forEach(image => {
+                const emoticonImage = document.createElement('img')
+                emoticonImage.setAttribute('src', `http://127.0.0.1:8080${image.image}`)
+                emoticonImage.setAttribute('style', 'height: 110px')
+                emoticonImages.appendChild(emoticonImage)
+            });
+        });
+
+        userEmoticon.appendChild(userEmoticonButton)
+
+        const userEmoticonButtonSpan = document.createElement('span')
+        userEmoticonButtonSpan.innerText = useremoticon.title
+        userEmoticonButton.appendChild(userEmoticonButtonSpan)
+    });
+
+    // 이모티콘 이미지 보기
+
 
     const commentCreateButton = document.getElementById("comment_create")
     commentCreateButton.setAttribute('onclick', `commentCreate(${articleId})`)
