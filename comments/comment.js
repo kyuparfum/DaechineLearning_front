@@ -105,7 +105,7 @@ async function emoticonButtonList(user_emoticon_list, emoticon_popup, emoticonbt
                             image_input_box_.removeAttribute('alt')
 
                             image_input_box_.setAttribute('src', `${back_base_url}${image.image}`)
-                            image_input_box_.setAttribute('style', 'width: 50px')
+                            image_input_box_.setAttribute('style', 'width: 50px; margin: auto;')
                             image_input_box_.setAttribute('id', use_emoticon)
                             image_input_box_.setAttribute('alt', `${image.id}`)
                             image_input_box_.addEventListener('click', function () {
@@ -114,7 +114,7 @@ async function emoticonButtonList(user_emoticon_list, emoticon_popup, emoticonbt
                             })
                         } else {
                             image_input_box_.setAttribute('src', `${back_base_url}${image.image}`)
-                            image_input_box_.setAttribute('style', 'width: 50px')
+                            image_input_box_.setAttribute('style', 'width: 50px; margin: auto;')
                             image_input_box_.setAttribute('id', use_emoticon)
                             image_input_box_.setAttribute('alt', `${image.id}`)
                             image_input_box_.addEventListener('click', function () {
@@ -153,7 +153,7 @@ async function emoticonButtonList(user_emoticon_list, emoticon_popup, emoticonbt
                             image_input_box_.removeAttribute('alt')
 
                             image_input_box_.setAttribute('src', `${back_base_url}${image.image}`)
-                            image_input_box_.setAttribute('style', 'width: 50px')
+                            image_input_box_.setAttribute('style', 'width: 50px; margin: auto;')
                             image_input_box_.setAttribute('id', use_emoticon)
                             image_input_box_.setAttribute('alt', `${image.id}`)
                             image_input_box_.addEventListener('click', function () {
@@ -162,7 +162,7 @@ async function emoticonButtonList(user_emoticon_list, emoticon_popup, emoticonbt
                             })
                         } else {
                             image_input_box_.setAttribute('src', `${back_base_url}${image.image}`)
-                            image_input_box_.setAttribute('style', 'width: 50px')
+                            image_input_box_.setAttribute('style', 'width: 50px; margin: auto;')
                             image_input_box_.setAttribute('id', use_emoticon)
                             image_input_box_.setAttribute('alt', `${image.id}`)
                             image_input_box_.addEventListener('click', function () {
@@ -215,7 +215,7 @@ async function emoticonButtonList(user_emoticon_list, emoticon_popup, emoticonbt
                             image_input_box.removeAttribute('alt')
 
                             image_input_box.setAttribute('src', `${back_base_url}${image.image}`)
-                            image_input_box.setAttribute('style', 'width: 50px')
+                            image_input_box.setAttribute('style', 'width: 50px; margin: auto;')
                             image_input_box.setAttribute('id', use_emoticon)
                             image_input_box.setAttribute('alt', `${image.id}`)
                             image_input_box.addEventListener('click', function () {
@@ -224,7 +224,7 @@ async function emoticonButtonList(user_emoticon_list, emoticon_popup, emoticonbt
                             })
                         } else {
                             image_input_box.setAttribute('src', `${back_base_url}${image.image}`)
-                            image_input_box.setAttribute('style', 'width: 50px')
+                            image_input_box.setAttribute('style', 'width: 50px; margin: auto;')
                             image_input_box.setAttribute('id', use_emoticon)
                             image_input_box.setAttribute('alt', `${image.id}`)
                             image_input_box.addEventListener('click', function () {
@@ -317,7 +317,6 @@ async function commentCreate(article_id) {
 function commentUpdate(comment_id) {
     const comment = document.getElementById(`comment${comment_id}`)
     let comment_save = document.getElementById(`comment${comment_id}`).innerHTML
-    const commentDiv = comment.childNodes[1]
 
     const commentP = comment.childNodes[1].lastChild
     const commentPValue = commentP.innerText
@@ -327,7 +326,7 @@ function commentUpdate(comment_id) {
     const commentUsedEmoticonSrc = commentUsedEmoticon.src
 
     const emoticonDiv = document.createElement('div')
-    emoticonDiv.setAttribute('class', 'card')
+    emoticonDiv.setAttribute('class', 'card text-center')
     
     const updateCommentEmoticon = document.createElement('img')
     updateCommentEmoticon.setAttribute('style','width: 50px; margin: auto;')
