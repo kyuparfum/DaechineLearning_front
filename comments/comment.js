@@ -175,17 +175,7 @@ async function emoticonButtonList(user_emoticon_list, emoticon_popup, emoticonbt
 
                 baseEmoticonImages.appendChild(baseEmoticonImage)
             });
-        // const baseEmoticonImages = document.getElementById(emoticon_images)
-        // while (baseEmoticonImages.firstChild) {
-        //     baseEmoticonImages.firstChild.remove();
-        // }
-        // response_baseemoticon.images.forEach(image => {
-        //     const baseEmoticonImage = document.createElement('img')
-        //     baseEmoticonImage.setAttribute('src', `${back_base_url}${image.image}`)
-        //     baseEmoticonImage.setAttribute('style', 'height: 110px')
-        //     baseEmoticonImages.appendChild(baseEmoticonImage)
-        // });
-
+        
         // 유저가 가진 이모티콘 리스트 추가
         const response_useremoticon = await getUserEmoticon(userId);
         const userEmoticonList = document.getElementById(user_emoticon_list)
