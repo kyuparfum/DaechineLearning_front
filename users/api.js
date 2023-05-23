@@ -10,7 +10,7 @@ async function handleSignin() {    // handle=눌렀을때 실행(처리)한다�
     console.log(email, username, password)
 
 
-    const response = await fetch("http://127.0.0.1:8000/users/signup/", {
+    const response = await fetch(`${back_base_url}/users/signup/`, {
         headers: {
             'content-type': 'application/json',
         },
@@ -24,7 +24,7 @@ async function handleSignin() {    // handle=눌렀을때 실행(처리)한다�
 
     if (response.status == 201) {
         alert("회원가입이 완료되었습니다. 로그인페이지로 이동합니다")
-        window.location.replace('http://127.0.0.1:5500/users/login.html')
+        window.location.replace(`${front_base_url}/users/login.html`)
     } else {
         alert("이미가입된 유저입니다.")
     }
@@ -40,7 +40,7 @@ async function handleLogin() {
     console.log(username, password)
 
 
-    const response = await fetch("http://127.0.0.1:8000/users/api/token/", {
+    const response = await fetch(`${back_base_url}/users/api/token/`, {
         headers: {
             'content-type': 'application/json',
         },
@@ -61,7 +61,7 @@ async function handleLogin() {
 
     if (response.status == 200) {
         alert("로그인되었습니다.")
-        window.location.replace('http://127.0.0.1:5500/index.html')
+        window.location.replace(`${front_base_url}/index.html`)
     } else {
         alert("잘못된 정보입니다. 다시입력해주세요")
     }
@@ -80,7 +80,7 @@ async function handleLogin() {
 }
 
 async function handleMock() {    // handle=눌렀을때 실행(처리)한다는 의미
-    const response = await fetch("http://127.0.0.1:8000/users/mock/", {
+    const response = await fetch(`${back_base_url}/users/mock/`, {
         headers: {
             "Authorization": 'Bearer ' + localStorage.getItem("access")
         },
@@ -97,5 +97,5 @@ async function handleLogout() {
     localStorage.removeItem("refresh")
     localStorage.removeItem("payload")
     location.reload();
-    // window.location.replace('http://127.0.0.1:5500/index.html')
+    // window.location.replace(`${front_base_url}/index.html`)
 }
