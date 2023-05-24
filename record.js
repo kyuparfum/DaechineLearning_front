@@ -1,6 +1,7 @@
 //webkitURL is deprecated but nevertheless
 URL = window.URL || window.webkitURL;
 
+recordStatus = true
 var gumStream;              //stream from getUserMedia()
 var rec;                    //Recorder.js object
 var input;                  //MediaStreamAudioSourceNode we'll be recording
@@ -13,18 +14,23 @@ var recordButton = document.getElementById("recordButton");
 var stopButton = document.getElementById("stopButton");
 
 //add events to those 2 buttons
-recordButton.addEventListener("click", startRecording);
-stopButton.addEventListener("click", stopRecording);
-pauseButton.addEventListener("click", pauseRecording);
+recordButton.addEventListener("click", boolRecord);
 
-
+function boolRecord() {
+    if (recordStatus) {
+        recordStatus = false
+        startRecording()
+    } else {
+        recordStatus = true
+        stopRecording()
+    }
+}
 function startRecording() {
     console.log("recordButton clicked");
 
     // Disable the record button until we get a success or fail from getUserMedia()
-    recordButton.disabled = true;
-    stopButton.disabled = false;
-    pauseButton.disabled = false
+    recordButton.disabled = false;
+
     navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(function (stream) {
         console.log("getUserMedia() success, stream created, initializing Recorder.js ...");
 
@@ -47,29 +53,15 @@ function startRecording() {
     }).catch(function (err) {
         //enable the record button if getUserMedia() fails
         recordButton.disabled = false;
-        stopButton.disabled = true;
-        pauseButton.disabled = true
     });
 }
-function pauseRecording() {
-    console.log("pauseButton clicked rec.recording=", rec.recording);
-    if (rec.recording) {
-        //pause 
-        rec.stop();
-        pauseButton.innerHTML = "Resume";
-    } else {
-        //resume 
-        rec.record()
-        pauseButton.innerHTML = "Pause";
-    }
-}
+
 function stopRecording() {
     console.log("stopButton clicked");
 
     //disable the stop button, enable the record too allow for new recordings
-    stopButton.disabled = true;
     recordButton.disabled = false;
-    pauseButton.disabled = true;
+
     //tell the recorder to stop the recording
     rec.stop(); //stop microphone access
     gumStream.getAudioTracks()[0].stop();
@@ -78,7 +70,7 @@ function stopRecording() {
     rec.exportWAV(createDownloadLink);
 }
 
-function createDownloadLink(blob) {
+async function createDownloadLink(blob) {
     var url = URL.createObjectURL(blob);
     var au = document.createElement('audio');
     var li = document.createElement('li');
@@ -105,6 +97,26 @@ function createDownloadLink(blob) {
     //add the save to disk link to li
     li.appendChild(link);
 
+
+    //blob
+    let token = localStorage.getItem("access")
+    const formdata = new FormData();
+    formdata.append("blob", blob)
+    const response = await fetch(`http://127.0.0.1:8000/sound/`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+        body: formdata
+    })
+    const data = await response.json()
+    console.log(data)
+
+    console.log(response["message"])
+
     //add the li element to the ol
-    recordingsList.appendChild(li);
+    //recordingsList.appendChild(li);
+
+
 }
+
