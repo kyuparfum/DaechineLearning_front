@@ -6,7 +6,7 @@ const payload = localStorage.getItem("payload");
 const payload_parse = JSON.parse(payload)
 
 
-console.log(token)
+console.log(token)//위험한거아닌가요?!
 console.log(payload_parse)
 console.log(payload_parse.username)
 console.log(payload_parse.email)
