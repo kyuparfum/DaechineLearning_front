@@ -1,11 +1,16 @@
 async function music_search() {
-    console.log('m_search click')
     const query = document.querySelector("#query").value
     let limit = document.querySelector("#limit").value
-    console.log(query)
-    console.log(limit)
+    if (query === '') {
+        alert("검색어를 입력해주세요.")
+        return
+    }
+
     if (!limit || limit === '') {
         limit = 10
+    } else if (isNaN(parseInt(limit))) {
+        alert("검색 개수는 숫자를 입력해주세요.")
+        return
     }
 
     const formdata = new FormData()
@@ -50,10 +55,7 @@ async function music_search() {
                 </div>
             </div>`
     }
-    console.log("-------")
-    console.log(tracks)
-    console.log(track)
-    console.log("-------")
+
     h2_add.innerHTML = `<h2>Tracks (${tracks.length})</h2>`
     resultEl.innerHTML = trackHtml
 }
@@ -66,7 +68,7 @@ async function save_db(track) {
     formdata.append('album', track.album.name)
     formdata.append('music_id', track.album.id)
 
-    const response = await fetch(`http://127.0.0.1:8000/articles/save_music/`, {
+    const response = await fetch(`http://127.0.0.1:8000/articles/save_music`, {
         method: "POST",
         body: formdata
     })
