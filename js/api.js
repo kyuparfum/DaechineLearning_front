@@ -24,7 +24,7 @@ async function handleSignin() {    // handle=눌렀을때 실행(처리)한다�
 
     if (response.status == 201) {
         alert("회원가입이 완료되었습니다. 로그인페이지로 이동합니다")
-        window.location.replace(`${front_base_url}/users/login.html`)
+        window.location.replace(`${front_base_url}/html/login.html`)
     } else {
         alert("이미가입된 유저입니다.")
     }
