@@ -5,16 +5,20 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="index.js"></script>
-    <script src="users/api.js"></script>
+    <script src="components/urls.js"></script>
+    <script src="static/js/index.js"></script>
+    <script src="static/js/api.js"></script>
     <title>홈</title>
 </head>
 
 <body>
     <h1>메인홈페이지</h1>
-    <button type="button" onclick="location.href='http://127.0.0.1:5500/users/login.html'">로그인페이지로 이동</button>
-    <button type="button" onclick="location.href='http://127.0.0.1:5500/users/signup.html'">회원가입페이지로 이동</button>
-    <button type="button" onclick="handleLogout()">로그아웃</button>
+    <button type="button" onclick="location.href=`${front_base_url}/templates/login.html`">로그인페이지로 이동</button>
+    <button type="button" onclick="location.href=`${front_base_url}/templates/signup.html`">회원가입페이지로 이동</button>
+    <button type="button" onclick="handleLogout()">로그아웃</button><br><br>
+    <button type="button" onclick="location.href=`${front_base_url}/templates/comment.html?article_id=1`">1번 게시글 댓글로 이동</button>
+    <button type="button" onclick="location.href=`${front_base_url}/templates/emoticon_list.html`">이모티콘 리스트 보기</button>
+    <button type="button" onclick="location.href=`${front_base_url}/templates/emoticon_create.html`">이모티콘 만들기</button>
 </body>
 
 </html>
