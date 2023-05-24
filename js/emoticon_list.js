@@ -19,7 +19,8 @@ window.onload = async function () {
             
             const emoticonDetail = document.createElement('a')
             emoticonDetail.innerText = element.title
-            emoticonDetail.href = '../emoticon_detail.html'
+            emoticonDetail.href = `${front_base_url}/comments/emoticon_detail.html?emoticon_id=${element.id}`
+            emoticonDetail.value = element.id
             emoticon.appendChild(emoticonDetail)
         });
     } else {
