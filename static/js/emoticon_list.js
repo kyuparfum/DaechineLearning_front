@@ -19,7 +19,7 @@ window.onload = async function () {
             
             const emoticonDetail = document.createElement('a')
             emoticonDetail.innerText = element.title
-            emoticonDetail.href = `${front_base_url}/html/emoticon_detail.html?emoticon_id=${element.id}`
+            emoticonDetail.href = `${front_base_url}/templates/emoticon_detail.html?emoticon_id=${element.id}`
             emoticonDetail.value = element.id
             emoticon.appendChild(emoticonDetail)
         });
