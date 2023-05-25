@@ -18,7 +18,6 @@ async function music_search() {
     formdata.append('query', query)
     formdata.append('limit', limit)
 
-
     const response = await fetch(`http://127.0.0.1:8000/articles/music/api/search`, {
         method: "POST",
         body: formdata
@@ -48,8 +47,10 @@ async function music_search() {
                             <p class="card-text">Artist: ${track['artist']} / Album: ${track['album']['name']}</p>
                         </div>
                         <div class="card-footer d-flex justify-content-between">
-                            <small class="text-body-secondary fs-4">발매일 : ${track['album']['release_date']}</small>
+                            <small class="text-body-secondary fs-5">발매일 : ${track['album']['release_date']}</small>
                             <button onclick="save_db(tracks[${i}])" type="button" class="btn btn-primary">저장</button>
+                            
+                            <!-- <button onclick="preview_music(tracks[${i}])" type="button" class="btn btn-primary">미리듣기</button> -->
                         </div>
                     </div>
                 </div>
