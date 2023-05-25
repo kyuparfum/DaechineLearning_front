@@ -36,14 +36,16 @@
             <div class="mb-3">
                 <label for="limit" class="form-label">검색 개수</label>
                 <input type="text" class="form-control" id="limit" aria-describedby="limitlHelp">
-                <div id="limitlHelp" class="form-text">가수로 검색할 경우 최대 개수를 정해주면 출력됩니다.<br> <span
-                        style="color:red;font-weight:700;">숫자만 입력 가능! 기본값은 10입니다.</span></div>
+                <div id="limitlHelp" class="form-text">
+                    <p class="fs-4">가수로 검색할 경우 최대 개수를 정해주면 출력됩니다.</p>
+                    <p class="fs-6" style="color:red;font-weight:700;">숫자만 입력 가능! 기본값은 10입니다.</p>
+                    <p class="fs-6" style="color:red;font-weight:700;">최대 검색 개수는 50입니다.</p>
+                </div>
             </div>
             <button onclick="music_search()" type="button" class="btn btn-primary">검색</button>
         </form>
         <div id="add_h2"></div>
         <div class="row row-cols-1 row-cols-md-3 g-5" id="result"></div>
-
     </main>
     <script src="../static/js/header.js"></script>
 </body>
