@@ -1,9 +1,30 @@
 const urlParams = new URLSearchParams(window.location.search);
 const emoticonId = urlParams.get("emoticon_id");
 
+const userId = JSON.parse(localStorage.getItem("payload")).user_id;
+
 // 이모티콘 가져오기
 async function getEmoticon(emoticon_id) {
     const response = await fetch(`${back_base_url}/comments/emoticon/detail/${emoticon_id}/`);
+
+    if (response.status == 200) {
+        response_json = await response.json();
+        return response_json;
+    } else {
+        alert(response.status);
+    }
+}
+
+// 유저가 가진 이모티콘들 가져오기
+async function getUserEmoticon(user_id) {
+    const access = localStorage.getItem("access");
+
+    const response = await fetch(`${back_base_url}/comments/emoticon/${user_id}`, {
+        headers: {
+            Authorization: `Bearer ${access}`,
+        },
+        method: "GET",
+    });
 
     if (response.status == 200) {
         response_json = await response.json();
@@ -45,18 +66,17 @@ async function emoticonUpdate(emoticon_id) {
 
     let emoticons = document.getElementById('images')
     let emoticonImages = emoticons.childNodes
-    
+
     let emoticonTitle = document.getElementById('title')
     let titleValue = emoticonTitle.innerText
     emoticonTitle.innerText = ''
     let titleInput = document.createElement('input')
-    titleInput.setAttribute('id','title_input')
+    titleInput.setAttribute('id', 'title_input')
     titleInput.placeholder = titleValue
     emoticonTitle.appendChild(titleInput)
 
 
     // 이모티콘 누르면 제거
-    // const removeImages = [] //제거할 리스트
     const removeImages = document.getElementById('remove_images') //제거할 리스트
     emoticonImages.forEach(element => {
         element.addEventListener('click', function () {
@@ -132,33 +152,46 @@ async function emoticonUpdateConfirm(emoticon_id) {
     } else {
         alert("잘못 된 요청입니다.");
     }
+}
 
-    // // 이미지 추가
-    // const addImages = document.getElementById('image').files
-    // console.log(addImages)
+// 유저 사용가능 저장
+async function emoticonSelect(emoticon_id) {
+    const access = localStorage.getItem("access");
 
-    // const imageFormData = new FormData()
+    console.log('클릭')
+    const select = document.getElementById('select_input').checked
+    console.log(select)
 
-    // for (let i = 0; i < addImages.length; i++) {
-    //     imageFormData.append("images", addImages[i]);
-    // }
+    let requestMethod = ''
+    if (select == true) {
+        console.log('트루')
+        requestMethod = "POST"
+    } else {
+        console.log('거짓')
+        requestMethod = "DELETE"
+    }
+    console.log(requestMethod)
+    
+    const formData = new FormData();
 
-    // const responseImage = await fetch(`${back_base_url}/comments/emoticon/images/`, {
-    //     headers: {
-    //         Authorization: `Bearer ${access}`,
-    //     },
-    //     method: "POST",
-    //     body: imageFormData,
-    // });
-    // const responseData = await responseImage.json();
-    // console.log(responseData);
+    // formData.append('buyer', userId)
+    formData.append('emoticon', emoticon_id)
 
-    // if (responseImage.status == 200) {
-    //     alert("수정 완료!");
-    //     window.location.href = `${front_base_url}/templates/emoticon_detail.html?emoticon_id=${emoticon_id}`;
-    // } else {
-    //     alert("잘못 된 요청입니다.");
-    // }
+    const response = await fetch(`${back_base_url}/comments/emoticon/${userId}/`, {
+        headers: {
+            Authorization: `Bearer ${access}`,
+        },
+        method: requestMethod,
+        body: formData,
+    });
+
+    if (response.status == 200) {
+        alert("사용 이모티콘에 추가했습니다")
+    } else if (response.status == 204) {
+        alert("사용 이모티콘에서 제외했습니다")
+    } else {
+        alert("잘못 된 요청입니다.");
+    }
 }
 
 window.onload = async function () {
@@ -190,4 +223,22 @@ window.onload = async function () {
     deleteButton.setAttribute('onclick', `emoticonDelete(${emoticonId})`)
     deleteButton.setAttribute('id', 'delete_button')
     parentsDiv.appendChild(deleteButton)
+
+
+    const userEmoticon = await getUserEmoticon(userId)
+    console.log(userEmoticon)
+    const selectInput = document.createElement('input')
+    selectInput.innerText = '사용하기'
+    selectInput.setAttribute('id', 'select_input')
+    selectInput.setAttribute('value', 'True')
+    selectInput.setAttribute('type', 'checkbox')
+
+    const idList = userEmoticon.map(obj => obj.id);
+    if (idList.includes(parseInt(emoticonId))) {
+        selectInput.setAttribute('checked', 'True')
+    }
+    selectInput.addEventListener('click', function () {
+        emoticonSelect(emoticonId)
+    })
+    parentsDiv.appendChild(selectInput)
 }

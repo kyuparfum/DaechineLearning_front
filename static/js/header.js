@@ -15,7 +15,7 @@ let header = `
         </header>
         <main>
         </main>
-        <button type="button" onclick="location.href=${front_base_url} /templates/comment.html ? article_id = 1">1번 게시글 댓글로
+        <button type="button" onclick="location.href=${front_base_url}/templates/comment.html?article_id=1">1번 게시글 댓글로
             이동</button>
 `
 
