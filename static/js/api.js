@@ -1,35 +1,30 @@
-window.onload = () => {
-    console.log("회원가입, 로그인 api")
-}
-
 let token = localStorage.getItem("access")
-// const headers = {
-//     'Access-Control-Allow-Headers': 'Authorization',
-//     'Access-Control-Allow-Origin': '*',
-//     'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers, Content-Type, Authorization',
-//     'Access-Control-Allow-Methods': '*',
-//     "Content-Type": "application/json"
-// }
 
-// callback(null, {
-//     statusCode: 200,
-//     body: "Hello, world!",
-//     headers: {
-//         "access-control-allow-origin": "*",
-//         'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-//         'Access-Control-Allow-Methods': '*',
-//         'Access-Control-Allow-Credentials': 'True',
-//     },
-// });
+// 현재 로그인 유저
+let payload = localStorage.getItem("payload");
+let payload_parse = JSON.parse(payload);
+let current_user = payload_parse.username;
+console.log(payload, payload_parse, current_user)
+
+// 이메일 유효성 검사
+function CheckEmail(str) {
+    var reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+    if (!reg_email.test(str)) {
+        return false;
+    } else {
+        return true;
+    }
+}
 
 // 회원가입
 async function handleSignin() {
     // try {
     const email = document.getElementById("email").value
+    const email_ = document.getElementById("email")
     const username = document.getElementById("username").value
     const password1 = document.getElementById("password1").value
     const password2 = document.getElementById("password2").value
-    console.log(email, username, password1, password2)
+    console.log(email_, email, username, password1, password2)
 
     if (password2 !== password1) {
         alert("비번 잘못된입력입니다. 확인해주세요.")
@@ -37,7 +32,48 @@ async function handleSignin() {
     } else if (!email || !username || !password1 || !password2) {
         alert("공란 잘못된입력입니다. 확인해주세요.")
         window.location.reload()
+    } else if (!CheckEmail(email)) { // 존재한다면 -1이 아닌 숫자가 반환됨
+        alert("이메일 형식이 아닙니다.");
+        email_.focus();
+        console.log(email_)
+        return false;
     }
+    // userID(e-mail) 가입여부 검사
+    // $("#checkid").click(function (e) {
+    //     e.preventDefault();
+    //     var email = $("input[name='email']");
+    //     if (email.val() == '') {
+    //         alert('이메일을 입력하세요');
+    //         email.focus();
+    //         return false;
+    //     } else {
+    //         var emailRegex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    //         if (!emailRegex.test(email.val())) {
+    //             alert('이메일 주소가 유효하지 않습니다. ex)abc@gmail.com');
+    //             email.focus();
+    //             return false;
+    //         }
+    //     }
+
+    //     $.ajax({
+    //         url: 'a.joinChk.php',
+    //         type: 'POST',
+    //         data: { userID: email.val() },
+    //         dataType: "json",
+    //         success: function (msg) {
+    //             //alert(msg); // 확인하고 싶으면 dataType: "text" 로 변경한 후 확인 가능
+    //             if (msg.result == 1) {
+    //                 alert('사용 가능합니다');
+    //             } else if (msg.result == 0) {
+    //                 alert('이미 가입된 아이디입니다');
+    //                 email.val('');
+    //             }
+    //         },
+    //         error: function (jqXHR, textStatus, errorThrown) {
+    //             alert("arjax error : " + textStatus + "\n" + errorThrown);
+    //         }
+    //     });
+    // });
 
     const response = await fetch(`${back_base_url}/users/dj-rest-auth/registration/`, {
         headers: {
@@ -58,9 +94,11 @@ async function handleSignin() {
         alert("이메일을 확인해주세요.")
         window.location.reload()
     } else {
-        console.error(error.msg)
+        console.error()
         // alert(error)
         alert("이미가입된 유저입니다.")
+        alert(response.status)
+        window.location.reload()
     }
     // } catch (err) {
     //     errorText.innerHTML = '에러메시지 : ' + err;
@@ -79,7 +117,7 @@ async function handleEmailValify() {
 
     const response = await fetch(`${back_base_url}/users/dj-rest-auth/registration/resend-email/`, {
         headers: {
-            headers,
+            "Content-Type": "application/json",
         },
         method: 'POST',
         body: JSON.stringify({
@@ -89,11 +127,12 @@ async function handleEmailValify() {
     console.log(response)
     if (response.status == 200) {
         alert("이메일을 확인해주세요.")
-        window.location.reload()
+        window.location.replace(`${front_base_url}/templates/login.html`)
     } else {
-        console.error(error.msg)
+        // console.error(error.msg)
         // alert(error)
         alert("가입되지 않은 이메일입니다. 다시확인해주세요.")
+        alert(response.status)
     }
 
 }
@@ -127,7 +166,9 @@ async function handleLogin() {
         alert("로그인되었습니다.")
         window.location.replace(`${front_base_url}/index.html`)
     } else {
-        alert("이메일 인증먼저")
+        alert("이메일 인증먼저해주세요!")
+        alert(response.status)
+        window.location.replace(`${front_base_url}/templates/login.html`)
     }
 
 
@@ -159,4 +200,40 @@ async function handleLogout() {
     localStorage.removeItem("payload")
     location.reload();
     console.log(response)
+}
+
+// 비번변경-로그인된 상태에서
+async function pschange() {
+    const password1 = document.getElementById("password1").value
+    const password2 = document.getElementById("password2").value
+    console.log(password1, password2)
+
+    if (password2 !== password1) {
+        alert("비번 잘못된입력입니다. 확인해주세요.")
+        window.location.reload()
+    } else if (!password1 || !password2) {
+        alert("공란 잘못된입력입니다. 확인해주세요.")
+        window.location.reload()
+    }
+
+    const response = await fetch(`${back_base_url}/users/dj-rest-auth/password/change/`, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            "Content-Type": "application/json",
+
+        },
+        method: 'POST',
+        body: JSON.stringify({
+            "password1": password1,
+            "password2": password2
+        })
+    })
+    alert("비밀번호가 변경되었습니다.")
+    window.location.replace(`${front_base_url}/index.html`)
+    console.log(response)
+}
+
+window.onload = () => {
+    console.log("회원가입, 로그인 api")
+
 }

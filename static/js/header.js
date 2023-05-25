@@ -6,12 +6,11 @@ let header = `
         <a href="/templates/music_search.html" class="btn btn-primary">음악검색</a>
     </nav>
     <div class="sign d-flex justify-content-between align-items-center">
-        <button class="btn btn-secondary" type="button"
-            onclick="location.href=${front_base_url}/templates/login.html">로그인페이지로 이동</button>
-        <button class="btn btn-secondary ms-3" type="button"
-            onclick="location.href=${front_base_url} /templates/signup.html">회원가입페이지로 이동</button>
-        <button class="btn btn-secondary ms-3 me-3" type="button" onclick="handleLogout()">로그아웃</button><br><br>
-        </div><!-- e:sign -->
+    <nav>
+        <a href="/templates/login.html" class="btn btn-primary">로그인페이지로 이동</a>
+        <a href="/templates/signup.html" class="btn btn-primary">회원가입페이지로 이동</a>
+        <a href="javascript:void(0);" onclick="handleLogout()" class="btn btn-primary">로그아웃</a>
+    </nav><!-- e:sign -->
         </header>
         <main>
         </main>
