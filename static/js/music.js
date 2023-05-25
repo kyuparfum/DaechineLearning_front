@@ -23,11 +23,19 @@ async function music_search() {
         body: formdata
     })
     const data = await response.json()
-    console.log(data)
+    // console.log(data)
+
 
     let resultEl = document.querySelector('#result')
     let h2_add = document.querySelector('#add_h2')
     tracks = data['tracks']
+    tracks = await Promise.all(tracks.map(async track => {
+        const previewUrl = await preview_music(track);
+        return {
+            ...track,
+            preview_url: previewUrl
+        }
+    }))
     let trackHtml = ``
     for (let i = 0; i < tracks.length; i++) {
         track = tracks[i]
@@ -36,33 +44,51 @@ async function music_search() {
         if (images && images.length > 0) {
             imageUrl = images[0]['url']
         }
-
-        trackHtml +=
-            `<div class="track-container">
-                <div class="col">
-                    <div class="card h-100">
-                    <img src = "${imageUrl}" height = "300" width = "300" class="card-img-top">
-                        <div class="card-body">
-                            <h2 class="card-title">${i + 1}. ${track['name']}</h2>
-                            <p class="card-text">Artist: ${track['artist']} / Album: ${track['album']['name']}</p>
-                        </div>
-                        <div class="card-footer d-flex justify-content-between">
-                            <small class="text-body-secondary fs-5">발매일 : ${track['album']['release_date']}</small>
-                            <button onclick="save_db(tracks[${i}])" type="button" class="btn btn-primary">저장</button>
-                            
-                            <!-- <button onclick="preview_music(tracks[${i}])" type="button" class="btn btn-primary">미리듣기</button> -->
-                        </div>
+        trackHtml += `
+        <div class="track-container">
+            <div class="col">
+                <div class="card h-100">
+                    <img src="${imageUrl}" height="300" width="300" class="card-img-top">
+                <div class="card-body">
+                    <h2 class="card-title">${i + 1}. ${track.name}</h2>
+                    <p class="card-text">Artist: ${track.artist} / Album: ${track.album.name}</p>
+                </div>
+                <div class="card-footer d-flex justify-content-between">
+                    <small class="text-body-secondary fs-5">발매일 : ${track.album.release_date}</small>
+                    <button onclick="save_db(tracks[${i}])" type="button" class="btn btn-primary">저장</button>
+                </div>
+                    <div class="audio">
+                        <audio style="width:100%;" controls="" name="media" class="mt-4 mb-4 ps-3 pe-3">
+                        <source src="${track.preview_url}" type="audio/mpeg">
+                        </audio>
                     </div>
                 </div>
-            </div>`
+            </div>
+        </div>`
     }
 
     h2_add.innerHTML = `<h2>Tracks (${tracks.length})</h2>`
     resultEl.innerHTML = trackHtml
 }
+// 미리듣기url 가져오는 함수
+async function preview_music(track) {
+    let response = await fetch('http://127.0.0.1:8000/articles/music/api/music-id-search', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            music_id: track.id
+        })
+    });
+    let data = await response.json();
+    return data.preview_url;
+}
 
 async function save_db(track) {
-    console.log(track.album.id)
+    console.log("===3===")
+    console.log(track)
+    console.log("===4===")
     const formdata = new FormData()
     formdata.append('name', track.name)
     formdata.append('artist', track.artist)
