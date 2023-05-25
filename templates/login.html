@@ -17,7 +17,16 @@
         <input type="password" id="password" name="password" placeholder="password">
         <button type="button" onclick="handleLogin()">제출</button>
     </form>
-    <button type="button" onclick="handleLogout()">로그아웃</button>
+    <p>
+        "로그아웃 하시겠습니까?
+        <a href="javascript:void(0);" onclick="handleLogout()">로그아웃</a>
+        "
+    </p>
+    <p>
+        "인증이메일을 못받으셨다면
+        <a href="/templates/emailresent.html">이메일 재전송</a>
+        하세요."
+    </p>
 </body>
 
 </html>
