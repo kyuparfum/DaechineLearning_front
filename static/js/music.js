@@ -19,7 +19,7 @@ async function music_search() {
     formdata.append('query', query)
     formdata.append('limit', limit)
 
-    const response = await fetch(`http://127.0.0.1:8000/articles/music/api/search`, {
+    const response = await fetch(`http://127.0.0.1:8080/articles/music/api/search`, {
         method: "POST",
         body: formdata
     })
@@ -56,7 +56,7 @@ async function music_search() {
                 </div>
                 <div class="card-footer d-flex justify-content-between">
                     <small class="text-body-secondary fs-5">발매일 : ${track.album.release_date}</small>
-                    <button onclick="save_db(tracks[${i}])" type="button" class="btn btn-primary">저장</button>
+                    <button onclick="save_db(tracks[${i}])" type="button" class="btn btn-primary" >저장</button>
                 </div>
                     <div class="audio">
                         <audio style="width:100%;" controls="" name="media" class="mt-4 mb-4 ps-3 pe-3">
@@ -73,7 +73,7 @@ async function music_search() {
 }
 // 미리듣기url 가져오는 함수
 async function preview_music(track) {
-    let response = await fetch('http://127.0.0.1:8000/articles/music/api/music-id-search', {
+    let response = await fetch('http://127.0.0.1:8080/articles/music/api/music-id-search', {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -99,7 +99,7 @@ async function save_db(track) {
     formdata.append('artist', track.artist)
     formdata.append('album', track.album.name)
     formdata.append('music_id', track.album.id)
-    const response = await fetch(`http://127.0.0.1:8000/articles/save_music`, {
+    const response = await fetch(`http://127.0.0.1:8080/articles/save_music`, {
         method: "POST",
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -115,9 +115,15 @@ async function save_db(track) {
     console.log("===4===")
 
 
-    const data = await response.json()
-    console.log(data)
-    alert(data["message"])
+    // const data = await response.json()
+    console.log(response)
+    console.log(typeof response)
+    // alert(data["message"])
+
+    window.opener.document.getElementById('') = data
+    window.close();
+
+    
 }
 
 //녹음
