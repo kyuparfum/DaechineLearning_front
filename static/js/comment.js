@@ -64,8 +64,9 @@ async function getBaseEmoticon(userId) {
     if (response.status == 200) {
         response_json = await response.json();
         return response_json;
-    } else {
-        alert(response.status);
+    } else if (response.status == 404) {
+        // alert(response.status);
+        console.log('기본 이모티콘 없어서 뜨는 에러')
     }
 }
 
@@ -178,6 +179,7 @@ async function emoticonButtonList(user_emoticon_list, emoticon_popup, emoticonbt
         
         // 유저가 가진 이모티콘 리스트 추가
         const response_useremoticon = await getUserEmoticon(userId);
+        console.log(response_useremoticon)
         const userEmoticonList = document.getElementById(user_emoticon_list)
         response_useremoticon.forEach(user_emoticon => {
             const userEmoticon = document.createElement('li')
