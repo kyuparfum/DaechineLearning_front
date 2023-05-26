@@ -1,3 +1,4 @@
+let token = localStorage.getItem("access")
 async function music_search() {
     const query = document.querySelector("#query").value
     let limit = document.querySelector("#limit").value
@@ -86,19 +87,23 @@ async function preview_music(track) {
 }
 
 async function save_db(track) {
-    console.log("===3===")
-    console.log(track)
-    console.log("===4===")
     const formdata = new FormData()
     formdata.append('name', track.name)
     formdata.append('artist', track.artist)
     formdata.append('album', track.album.name)
     formdata.append('music_id', track.album.id)
-
     const response = await fetch(`http://127.0.0.1:8000/articles/save_music`, {
         method: "POST",
-        body: formdata
+        headers: {
+            'Authorization': `Bearer ${token}`,
+
+        },
+        body: formdata,
     })
+    console.log("===3===")
+    console.log(track)
+    console.log("===4===")
+
 
     const data = await response.json()
     console.log(data)
