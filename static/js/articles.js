@@ -2,9 +2,9 @@ token = localStorage.getItem("access")
 const getArticles = async () => {
     const response = await fetch(`${back_base_url}/articles/`)
     const articleResult = document.querySelector("#articles")
-
     if (response.status == 200) {
         response_json = await response.json();
+
         articles = response_json
         // console.log("111111111")
         // console.log(articles)
@@ -16,9 +16,18 @@ const getArticles = async () => {
             let images = article['images']
             let title = article['title']
             let content = article['content']
-            let genre = article['genre']
+            let genre = ''
+            article['genre'].forEach(element => {
+                genre += `${element.name}, `
+                console.log(genre)
+                // console.log('zzzzzzzzzzzz',element.name)
+                // genre.push(element.name)
+            });
+            genre = genre.substring(0, genre.length-2)
+            console.log(genre)
+            // console.log(article['genre'])
             let id = article['id']
-            console.log(article)
+            // console.log(article)
             let music_id = article['music_id']
             let music_search = article['music_search']
             let created_at = article['created_at']
@@ -29,11 +38,11 @@ const getArticles = async () => {
                         <img src="${images}" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">제목 : ${title}</h5>
-                            <p class="card-text">작성자 : ${user}.</p>
-                            <p class="card-text">곡명 : ${music_id}.</p>
-                            <p class="card-text">내용 : ${content}.</p>
-                            <p class="card-text">장르 : ${genre}.</p>
-                            <p class="card-text">작성일 : ${created_at}.</p>
+                            <p class="card-text">작성자 : ${user}</p>
+                            <p class="card-text">곡명 : ${music_id}</p>
+                            <p class="card-text">내용 : ${content}</p>
+                            <p class="card-text">장르 : ${genre}</p>
+                            <p class="card-text">작성일 : ${created_at}</p>
                             <button onclick="getDetailArticles(${id})" type="button" class="btn btn-primary">상세보기</button>
                         </div>
                     </div>

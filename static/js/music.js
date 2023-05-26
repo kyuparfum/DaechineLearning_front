@@ -114,13 +114,18 @@ async function save_db(track) {
     console.log(track)
     console.log("===4===")
 
-
-    // const data = await response.json()
     console.log(response)
     console.log(typeof response)
-    // alert(data["message"])
 
-    window.opener.document.getElementById('') = data
+    const data = await response.json()
+    console.log(data)
+    console.log(data.id)
+    console.log(data.images)
+
+    alert('데이터베이스 저장성공!')
+    window.opener.document.getElementById('music').value = data.id
+    window.opener.document.getElementById('image').src = data.images
+    window.opener.document.getElementById('image').name = data.images
     window.close();
 
     
