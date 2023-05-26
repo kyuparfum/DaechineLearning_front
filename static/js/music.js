@@ -188,4 +188,24 @@ async function createDownloadLink(blob) {
     //음성인식값 넣기
     document.getElementById("query").value = data["message"]
 }
-
+window.onload = () => {
+    let close = true
+    let jk_record = document.querySelector("#recordButton")
+    let jk_close = document.querySelector("#closeButton")
+    console.log(jk_close, jk_record)
+    jk_close.style.display = "none"
+    jk_record.addEventListener('click', function () {
+        if (close = true) {
+            jk_record.style.display = "none"
+            jk_close.style.display = "inline"
+            close = false
+        }
+    })
+    jk_close.addEventListener('click', function () {
+        if (close = true) {
+            jk_close.style.display = "none"
+            jk_record.style.display = "inline"
+            close = false
+        }
+    })
+}
