@@ -1,4 +1,4 @@
-let token = localStorage.getItem("access")
+token = localStorage.getItem("access")
 async function music_search() {
     const query = document.querySelector("#query").value
     let limit = document.querySelector("#limit").value
@@ -87,7 +87,14 @@ async function preview_music(track) {
 }
 
 async function save_db(track) {
+    const imageUrl = track.album.images[1].url;
     const formdata = new FormData()
+    const user = JSON.parse(localStorage.getItem("payload")).user_id
+    console.log("-----1-------")
+    console.log(imageUrl)
+    console.log("-----2-------")
+    formdata.append('user', user)
+    formdata.append('images', imageUrl)
     formdata.append('name', track.name)
     formdata.append('artist', track.artist)
     formdata.append('album', track.album.name)
@@ -100,6 +107,9 @@ async function save_db(track) {
         },
         body: formdata,
     })
+    console.log("=======1======")
+
+    console.log("=======2======")
     console.log("===3===")
     console.log(track)
     console.log("===4===")
