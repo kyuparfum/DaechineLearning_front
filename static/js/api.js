@@ -4,7 +4,7 @@ let token = localStorage.getItem("access")
 let payload = localStorage.getItem("payload");
 let payload_parse = JSON.parse(payload);
 let current_user = payload_parse.username;
-console.log(payload, payload_parse, current_user)
+// console.log(payload, payload_parse, current_user)
 
 // 이메일 유효성 검사
 function CheckEmail(str) {
@@ -38,42 +38,6 @@ async function handleSignin() {
         console.log(email_)
         return false;
     }
-    // userID(e-mail) 가입여부 검사
-    // $("#checkid").click(function (e) {
-    //     e.preventDefault();
-    //     var email = $("input[name='email']");
-    //     if (email.val() == '') {
-    //         alert('이메일을 입력하세요');
-    //         email.focus();
-    //         return false;
-    //     } else {
-    //         var emailRegex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    //         if (!emailRegex.test(email.val())) {
-    //             alert('이메일 주소가 유효하지 않습니다. ex)abc@gmail.com');
-    //             email.focus();
-    //             return false;
-    //         }
-    //     }
-
-    //     $.ajax({
-    //         url: 'a.joinChk.php',
-    //         type: 'POST',
-    //         data: { userID: email.val() },
-    //         dataType: "json",
-    //         success: function (msg) {
-    //             //alert(msg); // 확인하고 싶으면 dataType: "text" 로 변경한 후 확인 가능
-    //             if (msg.result == 1) {
-    //                 alert('사용 가능합니다');
-    //             } else if (msg.result == 0) {
-    //                 alert('이미 가입된 아이디입니다');
-    //                 email.val('');
-    //             }
-    //         },
-    //         error: function (jqXHR, textStatus, errorThrown) {
-    //             alert("arjax error : " + textStatus + "\n" + errorThrown);
-    //         }
-    //     });
-    // });
 
     const response = await fetch(`${back_base_url}/users/dj-rest-auth/registration/`, {
         headers: {
@@ -89,9 +53,6 @@ async function handleSignin() {
 
     })
     let result = await response.json();
-    // console.log(response)
-    // console.log(response.text())
-    // console.log(response.json())
     console.log(result)
     console.log(JSON.stringify(result))
 
@@ -99,27 +60,10 @@ async function handleSignin() {
         alert("이메일을 확인해주세요.")
         window.location.reload()
     } else {
-        //     // error.text().then(msg => alert(msg))
-        //     // console.error()
+        console.log(response.status)
         alert(JSON.stringify(result))
         window.location.reload()
-        alert(response.status)
-
-    }// catch (err) {
-    //     errorText.innerHTML = '에러메시지 : ' + err;
-    // }
-    // catch (error) {
-    //     // error.text().then(msg => alert(msg))
-    //     // console.log(error)
-    //     console.error(error);
-    //     // alert(error.msg)
-    //     alert("다시 확인해주세요!")
-    // }
-    // .catch((error) => {
-
-    //     alert(result);
-    //     console.log(error);
-    // });
+    }
 
 }
 
@@ -138,15 +82,17 @@ async function handleEmailValify() {
         })
     })
     console.log(response)
+    let result = await response.json();
+    console.log(result)
+    console.log(JSON.stringify(result))
+
     if (response.status == 200) {
         alert("이메일을 확인해주세요.")
         window.location.replace(`${front_base_url}/templates/login.html`)
     } else {
-        // console.error(error.msg)
-        alert(error)
-        alert("가입되지 않은 이메일입니다. 다시확인해주세요.")
-        alert(response.text)
-        alert(response.status)
+        console.log(response.status)
+        alert(JSON.stringify(result))
+        window.location.reload()
     }
 
 }
@@ -169,24 +115,22 @@ async function handleLogin() {
         })
     })
 
-    const response_json = await response.json()
+    const result = await response.json()
 
-    console.log(response_json)
+    console.log(result)
 
-    localStorage.setItem("access", response_json.access);
-    localStorage.setItem("refresh", response_json.refresh);
+    localStorage.setItem("access", result.access);
+    localStorage.setItem("refresh", result.refresh);
 
     if (response.status == 200) {
         alert("로그인되었습니다.")
         window.location.replace(`${front_base_url}/index.html`)
     } else {
-        alert("이메일 인증먼저해주세요!")
-        alert(response.status)
-        window.location.replace(`${front_base_url}/templates/login.html`)
+        console.log(response.status)
+        alert(JSON.stringify(result))
+        window.location.reload()
     }
 
-
-    // 코드스니펫에는 accessToken.split -> response_json.access(이걸로 변경해야함  Token없다고 에러)
     const base64Url = response_json.access.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
@@ -202,9 +146,7 @@ async function handleLogin() {
 async function handleLogout() {
     const response = await fetch(`${back_base_url}/users/dj-rest-auth/logout/`, {
         headers: {
-            // ${ back_base_url }
             'Authorization': `Bearer ${token}`,
-            // 'Access-Control-Allow-Credentials': 'true'
         },
         method: 'POST',
     })
