@@ -1,6 +1,8 @@
 // 게시글 id
 const urlParams = new URLSearchParams(window.location.search);
-const articleId = urlParams.get("article_id");
+const articleId = urlParams.get("id");
+
+console.log(articleId)
 
 // access토큰 user id
 if (localStorage.getItem("access")) {
@@ -506,62 +508,65 @@ window.onload = async function () {
         method: "GET",
     });
     const data = await response_emoticon.json();
+    try{
+        response_comment.forEach(element => {
+            const cardDiv = document.createElement("div")
+            cardDiv.setAttribute('class', 'card')
+            cardDiv.setAttribute('style', 'width: 100%; flex-direction: row;')
+            cardDiv.setAttribute('id', 'comment' + `${element.id}`)
+            cardDiv.setAttribute('value', element.id)
+            commentContent.appendChild(cardDiv)
 
-    response_comment.forEach(element => {
-        const cardDiv = document.createElement("div")
-        cardDiv.setAttribute('class', 'card')
-        cardDiv.setAttribute('style', 'width: 100%; flex-direction: row;')
-        cardDiv.setAttribute('id', 'comment' + `${element.id}`)
-        cardDiv.setAttribute('value', element.id)
-        commentContent.appendChild(cardDiv)
+            const nicknameDiv = document.createElement("div")
+            nicknameDiv.setAttribute('style', 'width: 15%;')
+            nicknameDiv.innerText = element.writer
+            cardDiv.appendChild(nicknameDiv)
 
-        const nicknameDiv = document.createElement("div")
-        nicknameDiv.setAttribute('style', 'width: 15%;')
-        nicknameDiv.innerText = element.writer
-        cardDiv.appendChild(nicknameDiv)
+            const commentDiv = document.createElement("div")
+            commentDiv.setAttribute('class', 'card-body')
+            commentDiv.setAttribute('style', 'width: 75%;')
 
-        const commentDiv = document.createElement("div")
-        commentDiv.setAttribute('class', 'card-body')
-        commentDiv.setAttribute('style', 'width: 75%;')
+            const commentEmoticon = document.createElement('img')
 
-        const commentEmoticon = document.createElement('img')
+            data.forEach(usedImage => {
+                if (usedImage.id == element.use_emoticon) {
+                    const usedemoticonimage = `${back_base_url}${usedImage.image}`
+                    commentEmoticon.setAttribute('src', usedemoticonimage)
+                    commentEmoticon.setAttribute('style', 'width: 50px')
+                    commentEmoticon.setAttribute('id', `comment_use_emoticon${usedImage.id}`)
+                    commentEmoticon.setAttribute('alt', `${usedImage.id}`)
+                    commentDiv.appendChild(commentEmoticon)
+                }
+            });
 
-        data.forEach(usedImage => {
-            if (usedImage.id == element.use_emoticon) {
-                const usedemoticonimage = `${back_base_url}${usedImage.image}`
-                commentEmoticon.setAttribute('src', usedemoticonimage)
-                commentEmoticon.setAttribute('style', 'width: 50px')
-                commentEmoticon.setAttribute('id', `comment_use_emoticon${usedImage.id}`)
-                commentEmoticon.setAttribute('alt', `${usedImage.id}`)
-                commentDiv.appendChild(commentEmoticon)
+            const commentP = document.createElement("p")
+            commentP.innerText = element.comment
+            commentDiv.appendChild(commentP)
+            cardDiv.appendChild(commentDiv)
+
+            const buttonDiv = document.createElement("div")
+            cardDiv.appendChild(buttonDiv)
+            buttonDiv.setAttribute('style', 'width: 10%;')
+
+            if (localStorage.getItem("access")) {
+                const userId = JSON.parse(localStorage.getItem("payload")).user_id
+
+                if (element.writer == userId) {
+                    const updateButton = document.createElement("button")
+                    updateButton.setAttribute('onclick', `commentUpdate(${element.id})`)
+                    updateButton.setAttribute('class', 'mt-3')
+                    updateButton.innerText = '수정'
+                    buttonDiv.appendChild(updateButton)
+
+                    const deleteButton = document.createElement("button")
+                    deleteButton.setAttribute('onclick', `commentDelete(${element.id})`)
+                    deleteButton.setAttribute('class', 'mt-3')
+                    deleteButton.innerText = '삭제'
+                    buttonDiv.appendChild(deleteButton)
+                }
             }
         });
-
-        const commentP = document.createElement("p")
-        commentP.innerText = element.comment
-        commentDiv.appendChild(commentP)
-        cardDiv.appendChild(commentDiv)
-
-        const buttonDiv = document.createElement("div")
-        cardDiv.appendChild(buttonDiv)
-        buttonDiv.setAttribute('style', 'width: 10%;')
-
-        if (localStorage.getItem("access")) {
-            const userId = JSON.parse(localStorage.getItem("payload")).user_id
-
-            if (element.writer == userId) {
-                const updateButton = document.createElement("button")
-                updateButton.setAttribute('onclick', `commentUpdate(${element.id})`)
-                updateButton.setAttribute('class', 'mt-3')
-                updateButton.innerText = '수정'
-                buttonDiv.appendChild(updateButton)
-
-                const deleteButton = document.createElement("button")
-                deleteButton.setAttribute('onclick', `commentDelete(${element.id})`)
-                deleteButton.setAttribute('class', 'mt-3')
-                deleteButton.innerText = '삭제'
-                buttonDiv.appendChild(deleteButton)
-            }
-        }
-    });
+    } catch (err) {
+        console.log('err')
+    }
 };
