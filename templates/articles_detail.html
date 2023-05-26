@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8">
     <title>게시글 정보</title>
-    <script src="../static/js/testarticle.js"></script>
+    <script src="../static/js/article_detail.js"></script>
+    <script src="../static/js/article_fin.js"></script>
     <script src="../components/urls.js"></script>
 
     <script src="../static/js/comment.js"></script>
@@ -19,31 +20,41 @@
 <body>
     <div class="container text-center mt-5">
         <h1>게시글 정보</h1>
-        <p id="images_p">
-            <img id="album-cover" src="" alt=""><br>
-        </p>
-        <p>
-            ID: <span id="article_id"></span>
-        </p>
-        <p>
-            제목: <span id="article_title"></span>
-        </p>
-        <p>
-            작성자: <span id="article_user"></span>
-        </p>
-        <p>
-            곡명: <span id="music_id"></span>
-        </p>
-        <p>
-            내용: <span id="article_content"></span>
-        </p>
-        <p>
-            장르: <span id="genre"></span>
-        </p>
+        <div style='display:flex;'>
+            <div id="images_p" style='margin-right: 100px'>
+            </div>
+
+            <div>
+                <p>
+                    ID: <span id="article_id"></span>
+                </p>
+                <p>
+                    제목: <span id="article_title"></span>
+                </p>
+                <p>
+                    작성자: <span id="article_user"></span>
+                </p>
+                <p>
+                    곡명: <span id="music_id"></span>
+                </p>
+                <p>
+                    내용: <span id="article_content"></span>
+                </p>
+                <p>
+                    장르: <span id="genre"></span>
+                </p>
+            </div>
+        </div>
     </div>
+    
+    <div style="text-align: center;">
+        <button>수정 못만들었어요 나 자러갈래요..</button>
+        <button onclick="articleDelete()">삭제 동작 됨</button>
+    </div>
+    
     <div class="container text-center mt-5">
 
-        <h1 class="mb-5">댓글</h1>
+        <h3 class="mb-1">댓글</h1>
         <div class="row row-cols-1 row-cols-md-2">
 
             <div id="comment-image" class="col"></div>
