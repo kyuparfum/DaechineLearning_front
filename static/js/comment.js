@@ -1,8 +1,6 @@
 // 게시글 id
-const urlParams = new URLSearchParams(window.location.search);
-const articleId = urlParams.get("id");
-
-console.log(articleId)
+const urlGetParams = new URLSearchParams(window.location.search);
+const articleId = urlGetParams.get("id");
 
 // access토큰 user id
 if (localStorage.getItem("access")) {

@@ -232,8 +232,3 @@ async function pschange() {
     window.location.replace(`${front_base_url}/index.html`)
     console.log(response)
 }
-
-window.onload = () => {
-    console.log("회원가입, 로그인 api")
-
-}
