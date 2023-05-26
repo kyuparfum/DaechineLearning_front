@@ -88,26 +88,39 @@ async function handleSignin() {
         })
 
     })
-    console.log(response)
+    let result = await response.json();
+    // console.log(response)
+    // console.log(response.text())
+    // console.log(response.json())
+    console.log(result)
+    console.log(JSON.stringify(result))
 
     if (response.status == 201) {
         alert("이메일을 확인해주세요.")
         window.location.reload()
     } else {
-        console.error()
-        // alert(error)
-        alert("이미가입된 유저입니다.")
-        alert(response.status)
+        //     // error.text().then(msg => alert(msg))
+        //     // console.error()
+        alert(JSON.stringify(result))
         window.location.reload()
-    }
-    // } catch (err) {
+        alert(response.status)
+
+    }// catch (err) {
     //     errorText.innerHTML = '에러메시지 : ' + err;
     // }
-    // } catch (error) {
-    //     error.text().then(msg => alert(msg))
+    // catch (error) {
+    //     // error.text().then(msg => alert(msg))
+    //     // console.log(error)
+    //     console.error(error);
     //     // alert(error.msg)
-    //     alert("이미가입된 유저입니다.")
+    //     alert("다시 확인해주세요!")
     // }
+    // .catch((error) => {
+
+    //     alert(result);
+    //     console.log(error);
+    // });
+
 }
 
 // 이메일 인증 재전송
@@ -130,8 +143,9 @@ async function handleEmailValify() {
         window.location.replace(`${front_base_url}/templates/login.html`)
     } else {
         // console.error(error.msg)
-        // alert(error)
+        alert(error)
         alert("가입되지 않은 이메일입니다. 다시확인해주세요.")
+        alert(response.text)
         alert(response.status)
     }
 
