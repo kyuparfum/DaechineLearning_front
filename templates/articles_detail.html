@@ -24,7 +24,7 @@
             <div id="images_p" style='margin-right: 100px'>
             </div>
 
-            <div>
+            <div style="width:500px">
                 <p>
                     ID: <span id="article_id"></span>
                 </p>
@@ -41,14 +41,14 @@
                     내용: <span id="article_content"></span>
                 </p>
                 <p>
-                    장르: <span id="genre"></span>
+                    장르<p id="genre" style="overflow-y:scroll; height:80px; margin-top: -15px; border: 1px solid #000000;"></p>
                 </p>
             </div>
         </div>
     </div>
     
     <div style="text-align: center;">
-        <button>수정 못만들었어요 나 자러갈래요..</button>
+        <button onclick="articleUpdate()">수정 못만들었어요 나 자러갈래요..</button>
         <button onclick="articleDelete()">삭제 동작 됨</button>
     </div>
     

@@ -35,42 +35,6 @@ async function handleSignin() {
         email_.focus();
         return false;
     }
-    // userID(e-mail) 가입여부 검사
-    // $("#checkid").click(function (e) {
-    //     e.preventDefault();
-    //     var email = $("input[name='email']");
-    //     if (email.val() == '') {
-    //         alert('이메일을 입력하세요');
-    //         email.focus();
-    //         return false;
-    //     } else {
-    //         var emailRegex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    //         if (!emailRegex.test(email.val())) {
-    //             alert('이메일 주소가 유효하지 않습니다. ex)abc@gmail.com');
-    //             email.focus();
-    //             return false;
-    //         }
-    //     }
-
-    //     $.ajax({
-    //         url: 'a.joinChk.php',
-    //         type: 'POST',
-    //         data: { userID: email.val() },
-    //         dataType: "json",
-    //         success: function (msg) {
-    //             //alert(msg); // 확인하고 싶으면 dataType: "text" 로 변경한 후 확인 가능
-    //             if (msg.result == 1) {
-    //                 alert('사용 가능합니다');
-    //             } else if (msg.result == 0) {
-    //                 alert('이미 가입된 아이디입니다');
-    //                 email.val('');
-    //             }
-    //         },
-    //         error: function (jqXHR, textStatus, errorThrown) {
-    //             alert("arjax error : " + textStatus + "\n" + errorThrown);
-    //         }
-    //     });
-    // });
 
     const response = await fetch(`${back_base_url}/users/dj-rest-auth/registration/`, {
         headers: {
@@ -91,19 +55,10 @@ async function handleSignin() {
         window.location.reload()
     } else {
         console.error()
-        // alert(error)
         alert("이미가입된 유저입니다.")
         alert(response.status)
         window.location.reload()
     }
-    // } catch (err) {
-    //     errorText.innerHTML = '에러메시지 : ' + err;
-    // }
-    // } catch (error) {
-    //     error.text().then(msg => alert(msg))
-    //     // alert(error.msg)
-    //     alert("이미가입된 유저입니다.")
-    // }
 }
 
 // 이메일 인증 재전송
@@ -123,8 +78,6 @@ async function handleEmailValify() {
         alert("이메일을 확인해주세요.")
         window.location.replace(`${front_base_url}/templates/login.html`)
     } else {
-        // console.error(error.msg)
-        // alert(error)
         alert("가입되지 않은 이메일입니다. 다시확인해주세요.")
         alert(response.status)
     }
@@ -180,9 +133,7 @@ async function handleLogin() {
 async function handleLogout() {
     const response = await fetch(`${back_base_url}/users/dj-rest-auth/logout/`, {
         headers: {
-            // ${ back_base_url }
             'Authorization': `Bearer ${token}`,
-            // 'Access-Control-Allow-Credentials': 'true'
         },
         method: 'POST',
     })

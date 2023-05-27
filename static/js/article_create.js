@@ -52,11 +52,8 @@ async function handleProductCreate() {
     const data = await response.json();
 
     if (response.status == 200) {
-        if (confirm("등록 완료!\n계속 등록 하시겠습니까?")) {
-            return false;
-        } else {
-            window.location.href = `../`;
-        }
+        alert("등록완료!")
+        window.location.href = `../`;
     } else if (response.status == 400) {
         alert("빈칸이 있거나 음악 검색 후 선택은 필수 입니다.");
     } else {
@@ -66,5 +63,5 @@ async function handleProductCreate() {
 
 // 자식창 열기
 function musicSearch() {
-    window.open(`/templates/music_search.html`, "name", "width=800, height=600, top=50, left=50")
+    window.open(`/templates/article_music_create.html`, "name", "width=900, height=600, top=50, left=50")
 }

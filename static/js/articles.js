@@ -16,7 +16,6 @@ const getArticles = async () => {
             let genre = ''
             article['genre'].forEach(element => {
                 genre += `${element.name}, `
-                console.log(genre)
             });
             genre = genre.substring(0, genre.length-2)
             let id = article['id']
@@ -33,7 +32,10 @@ const getArticles = async () => {
                             <p class="card-text">작성자 : ${user}</p>
                             <p class="card-text">곡명 : ${music_id}</p>
                             <p class="card-text">내용 : ${content}</p>
-                            <p class="card-text" style="overflow-y:scroll; height:80px">장르 : ${genre}.</p>
+                            <div class="d-flex">
+                                <p class="card-text" >장르 : </p>
+                                <p class="card-text" style="overflow-y:scroll; height:80px; flex: 1; margin-left: 10px;">${genre}.</p>
+                            </div>
                             <p class="card-text">작성일 : ${created_at}</p>
                             <button onclick="getDetailArticles(${id})" type="button" class="btn btn-primary">상세보기</button>
                         </div>
