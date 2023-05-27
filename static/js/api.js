@@ -5,6 +5,7 @@ let payload = localStorage.getItem("payload");
 let payload_parse = JSON.parse(payload);
 let current_user = payload_parse.username;
 // console.log(payload, payload_parse, current_user)
+console.log("현재 로그인한//" + current_user)
 
 // 이메일 유효성 검사
 function CheckEmail(str) {
@@ -119,10 +120,17 @@ async function handleLogin() {
 
     console.log(result)
 
-    localStorage.setItem("access", result.access);
-    localStorage.setItem("refresh", result.refresh);
-
     if (response.status == 200) {
+        localStorage.setItem("access", result.access);
+        localStorage.setItem("refresh", result.refresh);
+
+        const base64Url = result.access.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        localStorage.setItem("payload", jsonPayload);
         alert("로그인되었습니다.")
         window.location.replace(`${front_base_url}/index.html`)
     } else {
@@ -130,15 +138,6 @@ async function handleLogin() {
         alert(JSON.stringify(result))
         window.location.reload()
     }
-
-    const base64Url = response_json.access.split('.')[1];
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
-
-    localStorage.setItem("payload", jsonPayload);
-
 
 }
 
@@ -180,13 +179,25 @@ async function pschange() {
         },
         method: 'POST',
         body: JSON.stringify({
-            "password1": password1,
-            "password2": password2
+            "new_password1": password1,
+            "new_password2": password2
         })
     })
-    alert("비밀번호가 변경되었습니다.")
-    window.location.replace(`${front_base_url}/index.html`)
-    console.log(response)
+
+    const result = await response.json()
+    console.log(result)
+
+    if (response.status == 200) {
+        console.log(response)
+        alert("비밀번호가 변경되었습니다.")
+        window.location.replace(`${front_base_url}/index.html`)
+    } else {
+        console.log(result)
+        console.log(response.status)
+        alert(JSON.stringify(result))
+        // window.location.reload()
+    }
+
 }
 
 window.onload = () => {
