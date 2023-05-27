@@ -142,7 +142,6 @@ async function handleLogout() {
     localStorage.removeItem("refresh")
     localStorage.removeItem("payload")
     location.reload();
-    console.log(response)
 }
 
 // 비번변경-로그인된 상태에서
@@ -172,5 +171,4 @@ async function pschange() {
     })
     alert("비밀번호가 변경되었습니다.")
     window.location.replace(`${front_base_url}/index.html`)
-    console.log(response)
 }

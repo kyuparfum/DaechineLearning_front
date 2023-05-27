@@ -24,7 +24,6 @@ async function music_search() {
         body: formdata
     })
     const data = await response.json()
-    // console.log(data)
 
 
     let resultEl = document.querySelector('#result')
