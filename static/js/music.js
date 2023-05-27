@@ -19,7 +19,7 @@ async function music_search() {
     formdata.append('query', query)
     formdata.append('limit', limit)
 
-    const response = await fetch(`http://127.0.0.1:8080/articles/music/api/search`, {
+    const response = await fetch(`https://test53jm.com/articles/music/api/search`, {
         method: "POST",
         body: formdata
     })
@@ -73,7 +73,7 @@ async function music_search() {
 }
 // 미리듣기url 가져오는 함수
 async function preview_music(track) {
-    let response = await fetch('http://127.0.0.1:8080/articles/music/api/music-id-search', {
+    let response = await fetch('https://test53jm.com/articles/music/api/music-id-search', {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -99,7 +99,7 @@ async function save_db(track) {
     formdata.append('artist', track.artist)
     formdata.append('album', track.album.name)
     formdata.append('music_id', track.album.id)
-    const response = await fetch(`http://127.0.0.1:8080/articles/save_music`, {
+    const response = await fetch(`https://test53jm.com/articles/save_music`, {
         method: "POST",
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -202,7 +202,7 @@ async function createDownloadLink(blob) {
     let token = localStorage.getItem("access")
     const formdata = new FormData();
     formdata.append("blob", blob)
-    const response = await fetch(`http://127.0.0.1:8000/sound/`, {
+    const response = await fetch(`https://test53jm.com/sound/`, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${token}`

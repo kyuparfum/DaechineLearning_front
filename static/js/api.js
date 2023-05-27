@@ -4,7 +4,6 @@ let token = localStorage.getItem("access")
 let payload = localStorage.getItem("payload");
 let payload_parse = JSON.parse(payload);
 let current_user = payload_parse.username;
-console.log(payload, payload_parse, current_user)
 
 // 이메일 유효성 검사
 function CheckEmail(str) {
@@ -24,7 +23,6 @@ async function handleSignin() {
     const username = document.getElementById("username").value
     const password1 = document.getElementById("password1").value
     const password2 = document.getElementById("password2").value
-    console.log(email_, email, username, password1, password2)
 
     if (password2 !== password1) {
         alert("비번 잘못된입력입니다. 확인해주세요.")
@@ -35,7 +33,6 @@ async function handleSignin() {
     } else if (!CheckEmail(email)) { // 존재한다면 -1이 아닌 숫자가 반환됨
         alert("이메일 형식이 아닙니다.");
         email_.focus();
-        console.log(email_)
         return false;
     }
     // userID(e-mail) 가입여부 검사
@@ -88,7 +85,6 @@ async function handleSignin() {
         })
 
     })
-    console.log(response)
 
     if (response.status == 201) {
         alert("이메일을 확인해주세요.")
@@ -113,7 +109,6 @@ async function handleSignin() {
 // 이메일 인증 재전송
 async function handleEmailValify() {
     const email = document.getElementById("email").value
-    console.log(email)
 
     const response = await fetch(`${back_base_url}/users/dj-rest-auth/registration/resend-email/`, {
         headers: {
@@ -124,7 +119,6 @@ async function handleEmailValify() {
             "email": email,
         })
     })
-    console.log(response)
     if (response.status == 200) {
         alert("이메일을 확인해주세요.")
         window.location.replace(`${front_base_url}/templates/login.html`)
@@ -141,7 +135,6 @@ async function handleEmailValify() {
 async function handleLogin() {
     const username = document.getElementById("username").value
     const password = document.getElementById("password").value
-    console.log(username, password)
 
     const response = await fetch(`${back_base_url}/users/dj-rest-auth/login/`, {
         headers: {
@@ -157,7 +150,6 @@ async function handleLogin() {
 
     const response_json = await response.json()
 
-    console.log(response_json)
 
     localStorage.setItem("access", response_json.access);
     localStorage.setItem("refresh", response_json.refresh);
@@ -206,7 +198,6 @@ async function handleLogout() {
 async function pschange() {
     const password1 = document.getElementById("password1").value
     const password2 = document.getElementById("password2").value
-    console.log(password1, password2)
 
     if (password2 !== password1) {
         alert("비번 잘못된입력입니다. 확인해주세요.")

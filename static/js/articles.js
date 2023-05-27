@@ -54,9 +54,6 @@ const getDetailArticles = async (article_id) => {
         }
         const articleDetail = await response.json();
         // 새로운 페이지 출력
-        console.log("11111111111")
-        console.log(articleDetail)
-        console.log("22222222222")
         window.open(
             `../templates/articles_detail.html?images=${articleDetail.images}&id=${articleDetail.id}&title=${articleDetail.title}&name=${articleDetail.user}&content=${articleDetail.content}&music_id=${articleDetail.music_id}&genre=${articleDetail.genre}`,
             'articleDetailPage',

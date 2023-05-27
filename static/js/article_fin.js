@@ -4,11 +4,9 @@ const urlParams = new URLSearchParams(queryString);
 const article_id = urlParams.get('id')
 
 async function getArticlesDetail() {
-    const response = await fetch(`http://127.0.0.1:8080//articles/${article_id}`)
+    const response = await fetch(`https://test53jm.com/articles/${article_id}`)
     const article_detail_data = await response.json()
-    console.log(article_detail_data)
 
-    console.log(article_id)
     // 가져온 데이터를 화면에 출력
     document.querySelector('#article_id').textContent = article_detail_data.id
     document.querySelector('#article_title').textContent = article_detail_data.title
@@ -25,7 +23,7 @@ async function getArticlesDetail() {
 
     document.querySelector('#genre').textContent = genre
     const images = urlParams.get('images')
-    console.log(images)
+
     const imagesP = document.getElementById('images_p')
     const imageMusic = document.createElement('img')
     imageMusic.setAttribute('src', images)
@@ -38,7 +36,6 @@ async function getArticlesDetail() {
 getArticlesDetail()
 
 async function articleDelete() {
-    console.log(article_id)
     const access = localStorage.getItem("access");
 
     if (confirm("삭제하시겠습니까?")) {
