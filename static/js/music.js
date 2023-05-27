@@ -202,7 +202,7 @@ async function createDownloadLink(blob) {
     let token = localStorage.getItem("access")
     const formdata = new FormData();
     formdata.append("blob", blob)
-    const response = await fetch(`${back_base_url}/sound/`, {
+    const response = await fetch(`https://test53jm.com/sound/`, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${token}`
