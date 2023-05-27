@@ -1,10 +1,6 @@
-// window.onload = () => {
-//     console.log("로딩");
-// }
-
 // 장르 가져오기
 async function getGenreList() {
-    const response = await fetch('http://127.0.0.1:8080/articles/genre/');
+    const response = await fetch(`https://test53jm.com/articles/genre/`);
     const data = await response.json();
 
     return data;
@@ -27,16 +23,14 @@ createGenreOptions();
 
 //등록
 async function handleProductCreate() {
-    console.log("등록");
-
     const access = localStorage.getItem("access");
 
     const music = document.getElementById("music").value;
-    console.log(music)
+
     const title = document.getElementById("title").value;
     const content = document.getElementById("content").value;
     const image = document.getElementById("image").name;
-    console.log(image)
+
     const genre = Array.from(
         document.getElementById("genre").selectedOptions
     ).map((option) => option.value);
@@ -48,9 +42,7 @@ async function handleProductCreate() {
     formData.append("images", image);
     genre.forEach((genre_id) => formData.append("genre", genre_id));
     
-    console.log(formData.getAll);
-
-    const response = await fetch("http://127.0.0.1:8080/articles/", {
+    const response = await fetch(`${back_base_url}/articles/`, {
         headers: {
             Authorization: `Bearer ${access}`,
         },
@@ -58,7 +50,6 @@ async function handleProductCreate() {
         body: formData,
     });
     const data = await response.json();
-    console.log(data);
 
     if (response.status == 200) {
         if (confirm("등록 완료!\n계속 등록 하시겠습니까?")) {
@@ -77,9 +68,3 @@ async function handleProductCreate() {
 function musicSearch() {
     window.open(`/templates/music_search.html`, "name", "width=800, height=600, top=50, left=50")
 }
-
-// // 자식창
-// let openWin = window.open("Child.html");
-// openWin.document.getElementById("cInput").value = "전달하고자 하는 값";
-
-

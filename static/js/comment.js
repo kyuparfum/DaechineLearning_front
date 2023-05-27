@@ -65,8 +65,6 @@ async function getBaseEmoticon(userId) {
         response_json = await response.json();
         return response_json;
     } else if (response.status == 404) {
-        // alert(response.status);
-        console.log('기본 이모티콘 없어서 뜨는 에러')
     }
 }
 
