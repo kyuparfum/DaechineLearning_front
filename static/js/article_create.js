@@ -1,3 +1,8 @@
+if (!localStorage.getItem("access")) {
+    alert("로그인이 필요합니다.")
+    window.location.href = `${front_base_url}/templates/login.html`
+}
+
 // 장르 가져오기
 async function getGenreList() {
     const response = await fetch(`https://test53jm.com/articles/genre/`);
