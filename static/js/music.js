@@ -24,7 +24,6 @@ async function music_search() {
         body: formdata
     })
     const data = await response.json()
-    // console.log(data)
 
 
     let resultEl = document.querySelector('#result')
@@ -90,9 +89,6 @@ async function save_db(track) {
     const imageUrl = track.album.images[1].url;
     const formdata = new FormData()
     const user = JSON.parse(localStorage.getItem("payload")).user_id
-    console.log("-----1-------")
-    console.log(imageUrl)
-    console.log("-----2-------")
     formdata.append('user', user)
     formdata.append('images', imageUrl)
     formdata.append('name', track.name)
@@ -107,20 +103,7 @@ async function save_db(track) {
         },
         body: formdata,
     })
-    console.log("=======1======")
-
-    console.log("=======2======")
-    console.log("===3===")
-    console.log(track)
-    console.log("===4===")
-
-    console.log(response)
-    console.log(typeof response)
-
     const data = await response.json()
-    console.log(data)
-    console.log(data.id)
-    console.log(data.images)
 
     alert('데이터베이스 저장성공!')
     window.opener.document.getElementById('music').value = data.id
@@ -153,14 +136,10 @@ async function record() {
     }
 }
 function startRecording() {
-    console.log("recordButton clicked");
-
     // Disable the record button until we get a success or fail from getUserMedia()
     recordButton.disabled = false;
 
     navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(function (stream) {
-        console.log("getUserMedia() success, stream created, initializing Recorder.js ...");
-
         audioContext = new AudioContext({ sampleRate: 16000 });
 
         // assign to gumStream for later use
@@ -175,8 +154,6 @@ function startRecording() {
         //start the recording process
         rec.record()
 
-        console.log("Recording started");
-
     }).catch(function (err) {
         //enable the record button if getUserMedia() fails
         recordButton.disabled = false;
@@ -184,8 +161,6 @@ function startRecording() {
 }
 
 function stopRecording() {
-    console.log("stopButton clicked");
-
     //disable the stop button, enable the record too allow for new recordings
     recordButton.disabled = false;
 
@@ -219,7 +194,7 @@ window.onload = () => {
     let close = true
     let jk_record = document.querySelector("#recordButton")
     let jk_close = document.querySelector("#closeButton")
-    console.log(jk_close, jk_record)
+
     jk_close.style.display = "none"
     jk_record.addEventListener('click', function () {
         if (close = true) {

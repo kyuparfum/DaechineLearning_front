@@ -1,10 +1,3 @@
-// 상단 로그아웃
-function handleLogout() {
-  localStorage.removeItem("access");
-  localStorage.removeItem("refresh");
-  localStorage.removeItem("payload");
-  window.location.replace(`${front_base_url}/templates/articles.html`);
-}
 // 페이지 로드, 게시글이랑 댓글 가져오기
 window.onload = async function () {
   // 상단바 (from homa.js)

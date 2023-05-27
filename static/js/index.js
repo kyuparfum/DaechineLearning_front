@@ -1,16 +1,8 @@
-console.log("js 연결");
-
 // 로그인한 사용자의 토큰을 저장하고 있는지 확인
 const token = localStorage.getItem("access");
 const payload = localStorage.getItem("payload");
 const payload_parse = JSON.parse(payload);
 const API_USERS = "api/users";
-
-// 연결 테스트, 사용자 정보 읽어오기
-// //  ${back_base_url}/api/users/1
-// fetch(`${backend_base_url}/${API_USERS}/1`)
-//     .then((response) => response.json())
-//     .then((data) => console.log(data));
 
 //  로그아웃
 function handleLogout() {
@@ -126,10 +118,6 @@ window.onload = async function loadArticles() {
 
 async function getArticles() {
   const response = await fetch(`${backend_base_url}/api/posts/`, {
-    // headers: {
-    //     "Authorization" : "Bearer " + localStorage.getItem("access")
-    // },
-    // 로그인 없어도 되면 headers 없어도 됨
     method: "GET", // 디폴트 get이라서 없어도 ok
   });
 

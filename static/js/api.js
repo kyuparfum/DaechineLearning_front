@@ -154,7 +154,6 @@ async function handleLogout() {
     localStorage.removeItem("refresh")
     localStorage.removeItem("payload")
     location.reload();
-    console.log(response)
 }
 
 // 비번변경-로그인된 상태에서
@@ -195,12 +194,8 @@ async function pschange() {
         console.log(result)
         console.log(response.status)
         alert(JSON.stringify(result))
-        // window.location.reload()
+        window.location.reload()
     }
 
 }
 
-window.onload = () => {
-    console.log("회원가입, 로그인 api")
-
-}

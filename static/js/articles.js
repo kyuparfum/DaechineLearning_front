@@ -49,7 +49,6 @@ const getArticles = async () => {
             let genre = ''
             article['genre'].forEach(element => {
                 genre += `${element.name}, `
-                console.log(genre)
             });
             genre = genre.substring(0, genre.length - 2)
             let id = article['id']

@@ -26,13 +26,10 @@ function boolRecord() {
     }
 }
 function startRecording() {
-    console.log("recordButton clicked");
-
     // Disable the record button until we get a success or fail from getUserMedia()
     recordButton.disabled = false;
 
     navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(function (stream) {
-        console.log("getUserMedia() success, stream created, initializing Recorder.js ...");
 
         audioContext = new AudioContext({ sampleRate: 16000 });
 
@@ -48,8 +45,6 @@ function startRecording() {
         //start the recording process
         rec.record()
 
-        console.log("Recording started");
-
     }).catch(function (err) {
         //enable the record button if getUserMedia() fails
         recordButton.disabled = false;
@@ -57,8 +52,6 @@ function startRecording() {
 }
 
 function stopRecording() {
-    console.log("stopButton clicked");
-
     //disable the stop button, enable the record too allow for new recordings
     recordButton.disabled = false;
 
@@ -110,13 +103,5 @@ async function createDownloadLink(blob) {
         body: formdata
     })
     const data = await response.json()
-    console.log(data)
-
-    console.log(response["message"])
-
-    //add the li element to the ol
-    //recordingsList.appendChild(li);
-
-
 }
 

@@ -1,3 +1,8 @@
+if (!localStorage.getItem("access")) {
+    alert("로그인이 필요합니다.")
+    window.location.href = `${front_base_url}/templates/login.html`
+}
+
 window.onload = async function () {
     const access = localStorage.getItem("access");
 
@@ -11,29 +16,25 @@ window.onload = async function () {
     if (response.status == 200) {
         response_json = await response.json();
 
-        const emoticons = document.getElementById('emoticons')
+        let emoticons = document.querySelector('#emoticons')
+        let emoticonHtml = ``
         
-        for (let i = 1; i < response_json.length; i++) {
-            const emoticon = document.createElement('li')
-            emoticons.appendChild(emoticon)
-            
-            const emoticonDetail = document.createElement('a')
-            emoticonDetail.innerText = response_json[i].title
-            emoticonDetail.href = `${front_base_url}/templates/emoticon_detail.html?emoticon_id=${response_json[i].id}`
-            emoticonDetail.value = response_json[i].id
-            emoticon.appendChild(emoticonDetail)
+        for (let i = 1; i < await response_json.length; i++) {
+            let emoticon = response_json[i]
+            let mainImage = emoticon.images[0].image
+            emoticonHtml += `
+            <div class="col">
+                <div class="card">
+                    <img src="${back_base_url}${mainImage}" class="card-img-top" style="height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title">${emoticon.title}</h5>
+                        <button onclick="location.href='${front_base_url}/templates/emoticon_detail.html?emoticon_id=${emoticon.id}'">보러가기</button>
+                    </div>
+                </div>
+            </div>
+            `
         }
-
-        // response_json.forEach(element => {
-        //     const emoticon = document.createElement('li')
-        //     emoticons.appendChild(emoticon)
-            
-        //     const emoticonDetail = document.createElement('a')
-        //     emoticonDetail.innerText = element.title
-        //     emoticonDetail.href = `${front_base_url}/templates/emoticon_detail.html?emoticon_id=${element.id}`
-        //     emoticonDetail.value = element.id
-        //     emoticon.appendChild(emoticonDetail)
-        // });
+        emoticons.innerHTML = emoticonHtml
     } else {
         alert(response.status);
     }
