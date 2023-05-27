@@ -6,9 +6,6 @@ const getArticles = async () => {
         response_json = await response.json();
 
         articles = response_json
-        // console.log("111111111")
-        // console.log(articles)
-        // console.log("222222222")
         let article_list = ``
         for (let i = 0; i < articles.length; i++) {
             article = articles[i]
@@ -20,14 +17,9 @@ const getArticles = async () => {
             article['genre'].forEach(element => {
                 genre += `${element.name}, `
                 console.log(genre)
-                // console.log('zzzzzzzzzzzz',element.name)
-                // genre.push(element.name)
             });
             genre = genre.substring(0, genre.length-2)
-            console.log(genre)
-            // console.log(article['genre'])
             let id = article['id']
-            // console.log(article)
             let music_id = article['music_id']
             let music_search = article['music_search']
             let created_at = article['created_at']
@@ -41,7 +33,7 @@ const getArticles = async () => {
                             <p class="card-text">작성자 : ${user}</p>
                             <p class="card-text">곡명 : ${music_id}</p>
                             <p class="card-text">내용 : ${content}</p>
-                            <p class="card-text">장르 : ${genre}</p>
+                            <p class="card-text" style="overflow-y:scroll; height:80px">장르 : ${genre}.</p>
                             <p class="card-text">작성일 : ${created_at}</p>
                             <button onclick="getDetailArticles(${id})" type="button" class="btn btn-primary">상세보기</button>
                         </div>
