@@ -95,7 +95,7 @@ async function emoticonButtonList(user_emoticon_list, emoticon_popup, emoticonbt
             response_baseemoticon.images.forEach(image => {
                 const baseEmoticonImage = document.createElement('img')
                 baseEmoticonImage.setAttribute('src', `${back_base_url}${image.image}`)
-                baseEmoticonImage.setAttribute('style', 'height: 110px')
+                baseEmoticonImage.setAttribute('style', 'width: 130px; height: 130px; object-fit: cover;')
 
                 const image_input_box_ = document.getElementById(use_emoticon)
                 baseEmoticonImage.addEventListener('click', function () {
@@ -104,7 +104,7 @@ async function emoticonButtonList(user_emoticon_list, emoticon_popup, emoticonbt
                         image_input_box_.removeAttribute('alt')
 
                         image_input_box_.setAttribute('src', `${back_base_url}${image.image}`)
-                        image_input_box_.setAttribute('style', 'width: 50px; margin: auto;')
+                        image_input_box_.setAttribute('style', 'width: 130px; height: 130px; object-fit: cover; margin: auto;')
                         image_input_box_.setAttribute('id', use_emoticon)
                         image_input_box_.setAttribute('alt', `${image.id}`)
                         image_input_box_.addEventListener('click', function () {
@@ -113,7 +113,7 @@ async function emoticonButtonList(user_emoticon_list, emoticon_popup, emoticonbt
                         })
                     } else {
                         image_input_box_.setAttribute('src', `${back_base_url}${image.image}`)
-                        image_input_box_.setAttribute('style', 'width: 50px; margin: auto;')
+                        image_input_box_.setAttribute('style', 'width: 130px; height: 130px; object-fit: cover; margin: auto;')
                         image_input_box_.setAttribute('id', use_emoticon)
                         image_input_box_.setAttribute('alt', `${image.id}`)
                         image_input_box_.addEventListener('click', function () {
@@ -143,7 +143,7 @@ async function emoticonButtonList(user_emoticon_list, emoticon_popup, emoticonbt
         response_baseemoticon.images.forEach(image => {
             const baseEmoticonImage = document.createElement('img')
             baseEmoticonImage.setAttribute('src', `${back_base_url}${image.image}`)
-            baseEmoticonImage.setAttribute('style', 'height: 110px')
+            baseEmoticonImage.setAttribute('style', 'width: 130px; height: 130px; object-fit: cover;')
 
             const image_input_box_ = document.getElementById(use_emoticon)
             baseEmoticonImage.addEventListener('click', function () {
@@ -152,7 +152,7 @@ async function emoticonButtonList(user_emoticon_list, emoticon_popup, emoticonbt
                     image_input_box_.removeAttribute('alt')
 
                     image_input_box_.setAttribute('src', `${back_base_url}${image.image}`)
-                    image_input_box_.setAttribute('style', 'width: 50px; margin: auto;')
+                    image_input_box_.setAttribute('style', 'width: 130px; height: 130px; object-fit: cover; margin: auto;')
                     image_input_box_.setAttribute('id', use_emoticon)
                     image_input_box_.setAttribute('alt', `${image.id}`)
                     image_input_box_.addEventListener('click', function () {
@@ -161,7 +161,7 @@ async function emoticonButtonList(user_emoticon_list, emoticon_popup, emoticonbt
                     })
                 } else {
                     image_input_box_.setAttribute('src', `${back_base_url}${image.image}`)
-                    image_input_box_.setAttribute('style', 'width: 50px; margin: auto;')
+                    image_input_box_.setAttribute('style', 'width: 130px; height: 130px; object-fit: cover; margin: auto;')
                     image_input_box_.setAttribute('id', use_emoticon)
                     image_input_box_.setAttribute('alt', `${image.id}`)
                     image_input_box_.addEventListener('click', function () {
@@ -177,7 +177,6 @@ async function emoticonButtonList(user_emoticon_list, emoticon_popup, emoticonbt
 
         // 유저가 가진 이모티콘 리스트 추가
         const response_useremoticon = await getUserEmoticon(userId);
-        console.log(response_useremoticon)
         const userEmoticonList = document.getElementById(user_emoticon_list)
         response_useremoticon.forEach(user_emoticon => {
             const userEmoticon = document.createElement('li')
@@ -196,7 +195,7 @@ async function emoticonButtonList(user_emoticon_list, emoticon_popup, emoticonbt
                 user_emoticon.images.forEach(image => {
                     const emoticonImage = document.createElement('img')
                     emoticonImage.setAttribute('src', `${back_base_url}${image.image}`)
-                    emoticonImage.setAttribute('style', 'height: 110px')
+                    emoticonImage.setAttribute('style', 'width: 130px; height: 130px; object-fit: cover;')
                     // 이모티콘 클릭했을때 입력창에 넣어주기
                     const image_input_box = document.getElementById(use_emoticon)
                     emoticonImage.addEventListener('click', function () {
@@ -205,7 +204,7 @@ async function emoticonButtonList(user_emoticon_list, emoticon_popup, emoticonbt
                             image_input_box.removeAttribute('alt')
 
                             image_input_box.setAttribute('src', `${back_base_url}${image.image}`)
-                            image_input_box.setAttribute('style', 'width: 50px; margin: auto;')
+                            image_input_box.setAttribute('style', 'width: 130px; height: 130px; object-fit: cover; margin: auto;')
                             image_input_box.setAttribute('id', use_emoticon)
                             image_input_box.setAttribute('alt', `${image.id}`)
                             image_input_box.addEventListener('click', function () {
@@ -214,7 +213,7 @@ async function emoticonButtonList(user_emoticon_list, emoticon_popup, emoticonbt
                             })
                         } else {
                             image_input_box.setAttribute('src', `${back_base_url}${image.image}`)
-                            image_input_box.setAttribute('style', 'width: 50px; margin: auto;')
+                            image_input_box.setAttribute('style', 'width: 130px; height: 130px; object-fit: cover; margin: auto;')
                             image_input_box.setAttribute('id', use_emoticon)
                             image_input_box.setAttribute('alt', `${image.id}`)
                             image_input_box.addEventListener('click', function () {
@@ -319,7 +318,7 @@ function commentUpdate(comment_id) {
     emoticonDiv.setAttribute('class', 'card text-center')
 
     const updateCommentEmoticon = document.createElement('img')
-    updateCommentEmoticon.setAttribute('style', 'width: 50px; margin: auto;')
+    updateCommentEmoticon.setAttribute('style', 'width: 130px; height: 130px; object-fit: cover; margin: auto;')
     updateCommentEmoticon.setAttribute('id', 'update_use_emoticon')
     if (commentUsedEmoticonSrc == undefined) {
 
@@ -528,7 +527,7 @@ window.onload = async function () {
                 if (usedImage.id == element.use_emoticon) {
                     const usedemoticonimage = `${back_base_url}${usedImage.image}`
                     commentEmoticon.setAttribute('src', usedemoticonimage)
-                    commentEmoticon.setAttribute('style', 'width: 50px')
+                    commentEmoticon.setAttribute('style', 'width: 130px; height: 130px; object-fit: cover;')
                     commentEmoticon.setAttribute('id', `comment_use_emoticon${usedImage.id}`)
                     commentEmoticon.setAttribute('alt', `${usedImage.id}`)
                     commentDiv.appendChild(commentEmoticon)

@@ -14,7 +14,6 @@ async function getArticlesDetail() {
     document.querySelector('#music_id').textContent = article_detail_data.music_id
     document.querySelector('#article_content').textContent = article_detail_data.content
 
-
     let genre = ''
     article_detail_data.genre.forEach(element => {
         genre += `${element.name}, `
@@ -59,4 +58,8 @@ async function articleDelete() {
         // 취소 버튼을 눌렀을 경우
         return false;
     }
+}
+
+async function articleUpdate(){
+    alert('그만..')
 }

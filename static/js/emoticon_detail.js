@@ -62,8 +62,6 @@ async function emoticonDelete(emoticon_id) {
 
 // 이모티콘 수정
 async function emoticonUpdate(emoticon_id) {
-    console.log('수정', emoticon_id)
-
     let emoticons = document.getElementById('images')
     let emoticonImages = emoticons.childNodes
 
@@ -114,12 +112,10 @@ async function emoticonUpdateConfirm(emoticon_id) {
     const access = localStorage.getItem("access");
     // 제거할 이미지 선택
     const removeImages = document.getElementById('remove_images').childNodes
-    console.log(removeImages)
     const removeImagesList = []
     removeImages.forEach(element => {
         removeImagesList.push(element.className)
     });
-    console.log(removeImagesList)
     // 제목 수정
     let title = document.getElementById('title_input').value
     if (title == '') {
@@ -144,7 +140,6 @@ async function emoticonUpdateConfirm(emoticon_id) {
         body: formData,
     });
     const data = await response.json();
-    console.log(data);
 
     if (response.status == 200) {
         alert("수정 완료!");
@@ -158,19 +153,14 @@ async function emoticonUpdateConfirm(emoticon_id) {
 async function emoticonSelect(emoticon_id) {
     const access = localStorage.getItem("access");
 
-    console.log('클릭')
     const select = document.getElementById('select_input').checked
-    console.log(select)
 
     let requestMethod = ''
     if (select == true) {
-        console.log('트루')
         requestMethod = "POST"
     } else {
-        console.log('거짓')
         requestMethod = "DELETE"
     }
-    console.log(requestMethod)
     
     const formData = new FormData();
 
@@ -196,7 +186,6 @@ async function emoticonSelect(emoticon_id) {
 
 window.onload = async function () {
     const response = await getEmoticon(emoticonId)
-    console.log(response)
 
     const emoticonTitle = document.getElementById('title')
     emoticonTitle.innerText = response.title
@@ -206,7 +195,7 @@ window.onload = async function () {
         const emoticonImage = document.createElement('img')
         emoticonImage.src = `${back_base_url}${element.image}`
         emoticonImage.setAttribute('alt', `${element.id}`)
-        emoticonImage.setAttribute('style', 'width: 100px')
+        emoticonImage.setAttribute('style', 'width: 130px; height: 130px; object-fit: cover;')
         emoticonImages.appendChild(emoticonImage)
     });
 
@@ -226,7 +215,6 @@ window.onload = async function () {
 
 
     const userEmoticon = await getUserEmoticon(userId)
-    console.log(userEmoticon)
     const selectInput = document.createElement('input')
     selectInput.setAttribute('id', 'select_input')
     selectInput.setAttribute('value', 'True')
