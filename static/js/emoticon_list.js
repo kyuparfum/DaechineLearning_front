@@ -1,3 +1,8 @@
+if (!localStorage.getItem("access")) {
+    alert("로그인이 필요합니다.")
+    window.location.href = `${front_base_url}/templates/login.html`
+}
+
 window.onload = async function () {
     const access = localStorage.getItem("access");
 

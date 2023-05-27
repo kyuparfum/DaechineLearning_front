@@ -1,3 +1,8 @@
+if (!localStorage.getItem("access")) {
+    alert("로그인이 필요합니다.")
+    window.location.href = `${front_base_url}/templates/login.html`
+}
+
 async function emoticonCreate() {
     const access = localStorage.getItem("access");
 
@@ -26,6 +31,8 @@ async function emoticonCreate() {
         if (response.status == 200) {
             alert('등록 완료!\n사용할 이모티콘에 등록해주세요')
             window.location.href = "../templates/emoticon_list.html";
+        } else if(response.status == 401) {
+            alert("로그인한 사용자만 이용 가능합니다.");
         } else {
             alert("잘못 된 요청입니다.");
         }
