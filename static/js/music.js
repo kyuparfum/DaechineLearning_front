@@ -1,4 +1,4 @@
-let token = localStorage.getItem("access")
+token = localStorage.getItem("access")
 async function music_search() {
     const query = document.querySelector("#query").value
     let limit = document.querySelector("#limit").value
@@ -19,7 +19,7 @@ async function music_search() {
     formdata.append('query', query)
     formdata.append('limit', limit)
 
-    const response = await fetch(`http://127.0.0.1:8000/articles/music/api/search`, {
+    const response = await fetch(`https://test53jm.com/articles/music/api/search`, {
         method: "POST",
         body: formdata
     })
@@ -56,7 +56,7 @@ async function music_search() {
                 </div>
                 <div class="card-footer d-flex justify-content-between">
                     <small class="text-body-secondary fs-5">발매일 : ${track.album.release_date}</small>
-                    <button onclick="save_db(tracks[${i}])" type="button" class="btn btn-primary">저장</button>
+                    <button onclick="save_db(tracks[${i}])" type="button" class="btn btn-primary" >저장</button>
                 </div>
                     <div class="audio">
                         <audio style="width:100%;" controls="" name="media" class="mt-4 mb-4 ps-3 pe-3">
@@ -73,7 +73,7 @@ async function music_search() {
 }
 // 미리듣기url 가져오는 함수
 async function preview_music(track) {
-    let response = await fetch('http://127.0.0.1:8000/articles/music/api/music-id-search', {
+    let response = await fetch('https://test53jm.com/articles/music/api/music-id-search', {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -87,12 +87,19 @@ async function preview_music(track) {
 }
 
 async function save_db(track) {
+    const imageUrl = track.album.images[1].url;
     const formdata = new FormData()
+    const user = JSON.parse(localStorage.getItem("payload")).user_id
+    console.log("-----1-------")
+    console.log(imageUrl)
+    console.log("-----2-------")
+    formdata.append('user', user)
+    formdata.append('images', imageUrl)
     formdata.append('name', track.name)
     formdata.append('artist', track.artist)
     formdata.append('album', track.album.name)
     formdata.append('music_id', track.album.id)
-    const response = await fetch(`http://127.0.0.1:8000/articles/save_music`, {
+    const response = await fetch(`https://test53jm.com/articles/save_music`, {
         method: "POST",
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -100,14 +107,28 @@ async function save_db(track) {
         },
         body: formdata,
     })
+    console.log("=======1======")
+
+    console.log("=======2======")
     console.log("===3===")
     console.log(track)
     console.log("===4===")
 
+    console.log(response)
+    console.log(typeof response)
 
     const data = await response.json()
     console.log(data)
-    alert(data["message"])
+    console.log(data.id)
+    console.log(data.images)
+
+    alert('데이터베이스 저장성공!')
+    window.opener.document.getElementById('music').value = data.id
+    window.opener.document.getElementById('image').src = data.images
+    window.opener.document.getElementById('image').name = data.images
+    window.close();
+
+    
 }
 
 //녹음
@@ -181,7 +202,7 @@ async function createDownloadLink(blob) {
     let token = localStorage.getItem("access")
     const formdata = new FormData();
     formdata.append("blob", blob)
-    const response = await fetch(`http://127.0.0.1:8000/sound/`, {
+    const response = await fetch(`https://test53jm.com/sound/`, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${token}`
