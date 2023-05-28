@@ -35,76 +35,83 @@ async function getUserEmoticon(user_id) {
 }
 
 // 이모티콘 삭제
-async function emoticonDelete(emoticon_id) {
+async function emoticonDelete(emoticon_id, creator) {
     const access = localStorage.getItem("access");
 
-    if (confirm("삭제하시겠습니까?")) {
-        const response = await fetch(
-            `${back_base_url}/comments/emoticon/detail/${emoticon_id}/`,
-            {
-                headers: {
-                    Authorization: `Bearer ${access}`,
-                },
-                method: "DELETE",
+    if (userId == creator) {
+        if (confirm("삭제하시겠습니까?")) {
+            const response = await fetch(
+                `${back_base_url}/comments/emoticon/detail/${emoticon_id}/`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${access}`,
+                    },
+                    method: "DELETE",
+                }
+            );
+            if (response.status == 204) {
+                alert("삭제되었습니다.");
+                window.location.href = `${front_base_url}/templates/emoticon_list.html`
+            } else {
+                alert("권한이 없습니다!");
             }
-        );
-        if (response.status == 204) {
-            alert("삭제되었습니다.");
-            window.location.href = `${front_base_url}/templates/emoticon_list.html`
         } else {
-            alert("권한이 없습니다!");
+            // 취소 버튼을 눌렀을 경우
+            return false;
         }
     } else {
-        // 취소 버튼을 눌렀을 경우
-        return false;
+        alert("삭제 권한이 없습니다!")
     }
 }
-
 // 이모티콘 수정
-async function emoticonUpdate(emoticon_id) {
-    let emoticons = document.getElementById('images')
-    let emoticonImages = emoticons.childNodes
+async function emoticonUpdate(emoticon_id, creator) {
 
-    let emoticonTitle = document.getElementById('title')
-    let titleValue = emoticonTitle.innerText
-    emoticonTitle.innerText = ''
-    let titleInput = document.createElement('input')
-    titleInput.setAttribute('id', 'title_input')
-    titleInput.placeholder = titleValue
-    emoticonTitle.appendChild(titleInput)
+    if (userId == creator) {
+        console.log('수정')
+        let emoticons = document.getElementById('images')
+        let emoticonImages = emoticons.childNodes
 
-
-    // 이모티콘 누르면 제거
-    const removeImages = document.getElementById('remove_images') //제거할 리스트
-    emoticonImages.forEach(element => {
-        element.addEventListener('click', function () {
-            const num = document.createElement('div')
-            num.className = element.alt
-            removeImages.appendChild(num)
-            element.remove()
-        })
-    });
-
-    const imageInput = document.getElementById('image_input')
-    const updateImageInput = document.createElement('input')
-    updateImageInput.setAttribute('type', 'file')
-    updateImageInput.setAttribute('id', 'image')
-    updateImageInput.setAttribute('multiple', 'true')
-    const updateImageLabel = document.createElement('label')
-    updateImageLabel.innerText = '추가할 이미지 : '
-    updateImageLabel.setAttribute('class', 'mb-3')
-    imageInput.appendChild(updateImageLabel)
-    imageInput.appendChild(updateImageInput)
+        let emoticonTitle = document.getElementById('title')
+        let titleValue = emoticonTitle.innerText
+        emoticonTitle.innerText = ''
+        let titleInput = document.createElement('input')
+        titleInput.setAttribute('id', 'title_input')
+        titleInput.placeholder = titleValue
+        emoticonTitle.appendChild(titleInput)
 
 
-    let updateConfirmButton = document.getElementById('update_button')
-    updateConfirmButton.setAttribute('onclick', `emoticonUpdateConfirm(${emoticon_id})`)
+        // 이모티콘 누르면 제거
+        const removeImages = document.getElementById('remove_images') //제거할 리스트
+        emoticonImages.forEach(element => {
+            element.addEventListener('click', function () {
+                const num = document.createElement('div')
+                num.className = element.alt
+                removeImages.appendChild(num)
+                element.remove()
+            })
+        });
 
-    let cancelConfirmButton = document.getElementById('delete_button')
-    cancelConfirmButton.setAttribute('onclick', 'location.reload()')
-    cancelConfirmButton.innerText = '취소'
+        const imageInput = document.getElementById('image_input')
+        const updateImageInput = document.createElement('input')
+        updateImageInput.setAttribute('type', 'file')
+        updateImageInput.setAttribute('id', 'image')
+        updateImageInput.setAttribute('multiple', 'true')
+        const updateImageLabel = document.createElement('label')
+        updateImageLabel.innerText = '추가할 이미지 : '
+        updateImageLabel.setAttribute('class', 'mb-3')
+        imageInput.appendChild(updateImageLabel)
+        imageInput.appendChild(updateImageInput)
 
 
+        let updateConfirmButton = document.getElementById('update_button')
+        updateConfirmButton.setAttribute('onclick', `emoticonUpdateConfirm(${emoticon_id})`)
+
+        let cancelConfirmButton = document.getElementById('delete_button')
+        cancelConfirmButton.setAttribute('onclick', 'location.reload()')
+        cancelConfirmButton.innerText = '취소'
+    } else {
+        alert("수정 권한이 없습니다!")
+    }
 }
 
 // 수정 확인
@@ -161,7 +168,7 @@ async function emoticonSelect(emoticon_id) {
     } else {
         requestMethod = "DELETE"
     }
-    
+
     const formData = new FormData();
 
     // formData.append('buyer', userId)
@@ -203,26 +210,35 @@ window.onload = async function () {
 
     const updateButton = document.createElement('button')
     updateButton.innerText = '수정'
-    updateButton.setAttribute('onclick', `emoticonUpdate(${emoticonId})`)
+    updateButton.setAttribute('onclick', `emoticonUpdate(${emoticonId}, ${response.creator})`)
     updateButton.setAttribute('id', 'update_button')
+    if (response.creator == userId) {
+        updateButton.setAttribute('style', 'display:inline')
+    } else {
+        updateButton.setAttribute('style', 'display:none')
+    }
     parentsDiv.appendChild(updateButton)
 
     const deleteButton = document.createElement('button')
     deleteButton.innerText = '삭제'
-    deleteButton.setAttribute('onclick', `emoticonDelete(${emoticonId})`)
+    deleteButton.setAttribute('onclick', `emoticonDelete(${emoticonId}, ${response.creator})`)
     deleteButton.setAttribute('id', 'delete_button')
+    if (response.creator == userId) {
+        deleteButton.setAttribute('style', 'display:inline')
+    } else {
+        deleteButton.setAttribute('style', 'display:none')
+    }
     parentsDiv.appendChild(deleteButton)
-
 
     const userEmoticon = await getUserEmoticon(userId)
     const selectInput = document.createElement('input')
     selectInput.setAttribute('id', 'select_input')
     selectInput.setAttribute('value', 'True')
     selectInput.setAttribute('type', 'checkbox')
-    
+
     const selectlabel = document.createElement('label')
     selectlabel.innerText = '사용하기'
-    
+
     const idList = userEmoticon.map(obj => obj.id);
     if (idList.includes(parseInt(emoticonId))) {
         selectInput.setAttribute('checked', 'True')
