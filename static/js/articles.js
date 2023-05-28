@@ -1,4 +1,37 @@
 token = localStorage.getItem("access")
+
+function elapsedText(date) {
+    // 초 (밀리초)
+    const seconds = 1;
+    // 분
+    const minute = seconds * 60;
+    // 시
+    const hour = minute * 60;
+    // 일
+    const day = hour * 24;
+
+    var today = new Date();
+    var elapsedTime = Math.trunc((today.getTime() - date.getTime()) / 1000);
+
+    var elapsedText = "";
+    if (elapsedTime < seconds + 10) {
+        elapsedText = "방금 전";
+    } else if (elapsedTime < minute) {
+        elapsedText = elapsedTime + "초 전";
+    } else if (elapsedTime < hour) {
+        elapsedText = Math.trunc(elapsedTime / minute) + "분 전";
+    } else if (elapsedTime < day) {
+        elapsedText = Math.trunc(elapsedTime / hour) + "시간 전";
+    } else if (elapsedTime < day * 15) {
+        elapsedText = Math.trunc(elapsedTime / day) + "일 전";
+    } else {
+        elapsedText = SimpleDateTimeFormat(date, "yyyy.M.d");
+    }
+
+    return elapsedText;
+}
+
+
 const getArticles = async () => {
     const response = await fetch(`${back_base_url}/articles/`)
     const articleResult = document.querySelector("#articles")
@@ -17,12 +50,16 @@ const getArticles = async () => {
             article['genre'].forEach(element => {
                 genre += `${element.name}, `
             });
-            genre = genre.substring(0, genre.length-2)
+            genre = genre.substring(0, genre.length - 2)
             let id = article['id']
             let music_id = article['music_id']
             let music_search = article['music_search']
             let created_at = article['created_at']
             let updated_at = article['updated_at']
+
+            let date = new Date(created_at)
+            let time = elapsedText(date)
+
             article_list += `
                 <div class="col">
                     <div class="card h-100">
@@ -32,11 +69,8 @@ const getArticles = async () => {
                             <p class="card-text">작성자 : ${user}</p>
                             <p class="card-text">곡명 : ${music_id}</p>
                             <p class="card-text">내용 : ${content}</p>
-                            <div class="d-flex">
-                                <p class="card-text" >장르 : </p>
-                                <p class="card-text" style="overflow-y:scroll; height:80px; flex: 1; margin-left: 10px;">${genre}.</p>
-                            </div>
-                            <p class="card-text">작성일 : ${created_at}</p>
+                            <p class="card-text" style="overflow-y:scroll; height:80px">장르 : ${genre}.</p>
+                            <p class="card-text">${time}</p>
                             <button onclick="getDetailArticles(${id})" type="button" class="btn btn-primary">상세보기</button>
                         </div>
                     </div>
