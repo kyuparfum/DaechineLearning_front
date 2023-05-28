@@ -1,23 +1,50 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 .signup-form {
-    background-color: rgb(220, 214, 214);
-    margin-top: 10%;
-    margin-left: 25%;
-    margin-right: 25%;
-    padding: 30px;
-    border-radius: 10px;
+    width: 1200px;
+    margin: 0 auto;
+    form
 }
 
-.signup {
-    margin-left: 20%;
-    ;
-}
-
-.h1 {
+.signup-form .h1 {
     text-align: center;
+}
+
+.signup-form .h1 h1 {}
+
+.signup-form .h1 h1 {}
+
+.signup-form .signup {
+    width: 1200px;
+}
+
+.signup-form .signup form {
+    width: 780px;
+    margin: 0 auto;
+}
+
+.signup-form .signup form #user_id {}
+
+.signup-form .signup form #user_id label {}
+
+.signup-form .signup form #user_id input {}
+
+.signup-form .signup form #user_pw {}
+
+.signup-form .signup form #user_pw label {}
+
+.signup-form .signup form #user_pw input {}
+
+.right {
+    text-align: right;
+}
+
+.test_class {
+    text-align: center;
+}
+
+.test_class div {
+    margin-bottom: 10px;
+}
+
+.certification {
+    margin-bottom: 0;
 }

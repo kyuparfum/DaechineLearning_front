@@ -1,24 +1,49 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 .login-form {
-    background-color: rgb(220, 214, 214);
-    margin-top: 10%;
-    margin-left: 25%;
-    margin-right: 25%;
-    padding: 30px;
-    border-radius: 10px;
+    width: 1200px;
+    margin: 0 auto;
 }
 
-.login {
-    margin-left: 20%;
-    ;
-}
-
-.h1 {
+.login-form .h1 {
     text-align: center;
-    margin-bottom: 3%;
+}
+
+.login-form .h1 h1 {}
+
+.login-form .h1 h1 {}
+
+.login-form .login {
+    width: 1200px;
+}
+
+.login-form .login form {
+    width: 780px;
+    margin: 0 auto;
+}
+
+.login-form .login form #user_id {}
+
+.login-form .login form #user_id label {}
+
+.login-form .login form #user_id input {}
+
+.login-form .login form #user_pw {}
+
+.login-form .login form #user_pw label {}
+
+.login-form .login form #user_pw input {}
+
+.right {
+    text-align: right;
+}
+
+.test_class {
+    text-align: center;
+}
+
+.test_class div {
+    margin-bottom: 10px;
+}
+
+.certification {
+    margin-bottom: 0;
 }
