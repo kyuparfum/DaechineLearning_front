@@ -514,7 +514,7 @@ window.onload = async function () {
 
             const nicknameDiv = document.createElement("div")
             nicknameDiv.setAttribute('style', 'width: 15%;')
-            nicknameDiv.innerText = element.writer
+            nicknameDiv.innerText = element.username
             cardDiv.appendChild(nicknameDiv)
 
             const commentDiv = document.createElement("div")
