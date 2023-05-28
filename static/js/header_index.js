@@ -2,7 +2,7 @@ function handlelogout() {
     localStorage.removeItem("access")
     localStorage.removeItem("refresh")
     localStorage.removeItem("payload")
-    window.location.replace('http://127.0.0.1:5500/templates/login.html')
+    window.location.replace('https://daechinelearning.netlify.app/templates/login.html')
 }
 
 async function injectHeader() {
